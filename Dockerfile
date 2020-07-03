@@ -6,6 +6,7 @@ RUN pip3 install scikit-image matplotlib pyyaml tensorboardX moviepy
 RUN conda install pytorch torchvision==0.5.0 cudatoolkit -c pytorch
 RUN apt-get -y install curl gnupg
 RUN pip3 install torch
+RUN python3 -c "import os print(os.environ.get('CUDA_PATH'))"
 RUN export PATH=/usr/local/cuda/bin:$PATH
 RUN export CPATH=/usr/local/cuda/include:$CPATH
 RUN export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
