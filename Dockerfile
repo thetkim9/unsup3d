@@ -3,6 +3,7 @@ FROM continuumio/anaconda3:latest
 RUN apt-get update
 RUN apt -y install python3-pip
 RUN pip3 install scikit-image matplotlib pyyaml tensorboardX moviepy
+RUN apt install nvidia-cuda-toolkit
 RUN conda install pytorch torchvision==0.5.0 cudatoolkit -c pytorch
 RUN apt-get -y install curl gnupg
 RUN pip3 install torch
