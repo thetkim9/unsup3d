@@ -3,15 +3,14 @@ FROM continuumio/anaconda3:latest
 RUN apt-get update
 RUN apt -y install python3-pip
 RUN pip3 install scikit-image matplotlib pyyaml tensorboardX moviepy
-RUN apt install nvidia-cuda-toolkit
+RUN export PATH=/usr/local/cuda/bin:$PATH
+RUN export CPATH=/usr/local/cuda/include:$CPATH
+RUN export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
 RUN conda install pytorch torchvision==0.5.0 cudatoolkit -c pytorch
 RUN apt-get -y install curl gnupg
 RUN pip3 install torch
 RUN python3 -c "import os; print(os.environ.get('CUDA_PATH'))"
 RUN python3 -c "import torch; torch.cuda.is_available()"
-RUN export PATH=/usr/local/cuda/bin:$PATH
-RUN export CPATH=/usr/local/cuda/include:$CPATH
-RUN export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
 RUN pip3 install neural_renderer_pytorch \
     facenet-pytorch \
     flask \
