@@ -20,3 +20,15 @@ RUN cd neural_renderer && python setup.py install
 RUN cd pretrained && sh download_pretrained_celeba.sh
 EXPOSE 80
 #CMD python3 -m demo.demo --input demo/images/human_face --result demo/results/human_face --checkpoint pretrained/pretrained_celeba/checkpoint030.pth
+
+#FROM nvidia/cuda:10.2-cudnn7-devel-ubuntu18.04 AS builder2
+#COPY --from=builder . .
+#RUN gcc --version
+#RUN pip3 install neural_renderer_pytorch
+
+#FROM yoanlin/opencv-python3
+#COPY --from=builder2 . .
+#RUN pip3 install flask Flask-Limiter
+#RUN pip3 install Pillow
+#RUN pip3 install requests
+#CMD cd workspace && python3 -m demo.demo --input demo/images/human_face --result demo/results/human_face --checkpoint pretrained/pretrained_celeba/checkpoint030.pth
