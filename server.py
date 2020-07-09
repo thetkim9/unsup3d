@@ -6,10 +6,6 @@ print(model)
 from flask import Flask, render_template, request, send_file
 from flask_limiter import Limiter
 from PIL import Image, ImageOps
-import PIL
-from ga import track_event
-from subprocess import Popen, PIPE
-import os
 
 app = Flask(__name__,template_folder="./")
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 8

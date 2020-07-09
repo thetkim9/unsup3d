@@ -32,7 +32,9 @@
 
                 <div id ='resultBox' style="margin-left: auto; margin-right: auto;">
                     <p id='errorbox'></p>
-                    <video id='resultVideo' src="" alt="">
+                    <video id='resultVideo' alt="" controls>
+                        <source id="resultSource" src="./demo/results/human_face/001_face/texture_animation.mp4" type="video/mp4">
+                    </video>
                 </div>
                 <script>
                     document.getElementById("submit").onclick = () => {
@@ -63,8 +65,9 @@
                         .then(response => response.blob())
                         .then(blob => URL.createObjectURL(blob))
                         .then(videoURL => {
-                            document.getElementById("resultVideo").src = videoURL;
+                            document.getElementById("resultSource").src = videoURL;
                             document.getElementById("errorbox").innerHTML = "";
+                            document.body.innerHTML += videoURL
                         })
                         .catch(e =>{
                             document.getElementById("errorbox").innerHTML = e;
