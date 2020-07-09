@@ -1,0 +1,78 @@
+<HTML>
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+            integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+        <title>ClothesVirtualFitting</title>
+    </head>
+    <body>
+        <div class = "container">
+            <div class="jumbotron mt-3">
+
+                <h1>displayVideo</h1>
+                <A>Git Hub repository : </A> <A href="https://github.com/thetkim9/unsup3d"> videoDisplay</A>
+                <br>
+                <A>Testing API : </A> <A href="https://ainize.ai/thetkim9/3dto2d"> on Ainize </A>
+
+                <hr class="solid">
+
+                <h2>Upload </h2>
+                <div id = 'inputImage'>
+                    <label for="source">person image : </label>
+                    <input type = 'file' id = 'source' style="margin-right: 10px; margin-bottom: 10px;">
+                    <label for="target">shirt image : </label>
+                    <input type = 'file' id = 'target' style="margin-right: 10px; margin-bottom: 10px;">
+                    <button id = "submit" type='submit' class="btn btn-primary btn-lg" style="margin-left: auto;"> Run </button>
+                </div>
+
+                <div id ='resultBox' style="margin-left: auto; margin-right: auto;">
+                    <p id='errorbox'></p>
+                    <video id='resultVideo' src="" alt="">
+                </div>
+                <script>
+                    document.getElementById("submit").onclick = () => {
+                        var formData = new FormData();
+                        var source = document.getElementById('source').files[0]
+                        var target = document.getElementById('target').files[0]
+
+                        formData.append('person_image', source)
+                        formData.append('shirt_image', target)
+
+                        fetch(
+                            '/fit',
+                            {
+                                method: 'POST',
+                                body: formData,
+                            }
+                        )
+                        .then(response => {
+                            if ( response.status == 200){
+                                return response
+                            }
+                            else{
+                                document.body.innerHTML += response.statusText
+                                throw Error("fit error")
+
+                            }
+                        })
+                        .then(response => response.blob())
+                        .then(blob => URL.createObjectURL(blob))
+                        .then(videoURL => {
+                            document.getElementById("resultVideo").src = videoURL;
+                            document.getElementById("errorbox").innerHTML = "";
+                        })
+                        .catch(e =>{
+                            document.getElementById("errorbox").innerHTML = e;
+                        })
+                    }
+
+                </script>
+            </div>
+        </div>
+    </body>
+</HTML>
