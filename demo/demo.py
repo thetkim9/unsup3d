@@ -15,7 +15,7 @@ class Demo():
         ## configs
         self.device = 'cuda:0'
         self.checkpoint_path = args.checkpoint
-        self.detect_human_face = detect_human_face
+        self.detect_human_face = args.detect_human_face
         self.render_video = args.render_video
         self.output_size = args.output_size
         self.image_size = 64

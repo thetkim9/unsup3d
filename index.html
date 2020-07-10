@@ -25,17 +25,12 @@
                 <div id = 'inputImage'>
                     <label for="source">person image : </label>
                     <input type = 'file' id = 'source' style="margin-right: 10px; margin-bottom: 10px;">
-                    <label for="target">shirt image : </label>
-                    <input type = 'file' id = 'target' style="margin-right: 10px; margin-bottom: 10px;">
                     <button id = "submit" type='submit' class="btn btn-primary btn-lg" style="margin-left: auto;"> Run </button>
                 </div>
 
                 <div id ='resultBox' style="margin-left: auto; margin-right: auto;">
                     <p id='errorbox'></p>
-                    <video id='resultVideo' alt="" controls>
-                        <source id="resultSource" src="texture_animation.mp4" type="video/mp4">
-                    </video>
-                    <img src="result.gif">
+                    <img id="result" src="">
                 </div>
                 <script>
                     document.getElementById("submit").onclick = () => {
@@ -47,7 +42,7 @@
                         formData.append('shirt_image', target)
 
                         fetch(
-                            '/fit',
+                            '/render3D',
                             {
                                 method: 'POST',
                                 body: formData,
@@ -65,10 +60,9 @@
                         })
                         .then(response => response.blob())
                         .then(blob => URL.createObjectURL(blob))
-                        .then(videoURL => {
-                            document.getElementById("resultSource").src = videoURL;
+                        .then(imageURL => {
+                            document.getElementById("result").src = imageURL;
                             document.getElementById("errorbox").innerHTML = "";
-                            document.body.innerHTML += videoURL
                         })
                         .catch(e =>{
                             document.getElementById("errorbox").innerHTML = e;

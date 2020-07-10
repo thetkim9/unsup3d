@@ -1,11 +1,8 @@
-'''
-import torch
-model = torch.load("./pretrained/pretrained_celeba/checkpoint030.pth")
-print(model)
-'''
 from flask import Flask, render_template, request, send_file
 from flask_limiter import Limiter
 from PIL import Image, ImageOps
+import subprocess
+import shlex
 
 app = Flask(__name__,template_folder="./")
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 8
@@ -21,18 +18,23 @@ def render3D():
   if request.method != "POST":
     return
 
-  if not request.files.get('human_face'):
+  if not request.files.get('person_image'):
     return {'error': 'must have a image of human face'}, 400
 
   try:
-    human_face = Image.open(request.files['human_face'].stream)
+    human_face = Image.open(request.files['person_image'].stream)
     if(human_face.format not in ['JPG', 'JPEG', 'PNG']):
       return {'error': 'image must be jpg, jpeg or png'}, 400
 
-    dir1 = "images/person."+human_face.format.lower()
+    dir1 = "demo/inputs/in."+human_face.format.lower()
     human_face.save(dir1)
     #print("hi2")
-    p = Popen(['./a.out'], shell=True, stdout=PIPE, stdin=PIPE)
+    command_line = 'python3 -m demo.demo --gpu --render_video --detect_human_face ' \
+                   '--input demo/inputs --result demo/outputs ' \
+                   '--checkpoint pretrained/pretrained_celeba/checkpoint030.pth'
+    args = shlex.split(command_line)
+    p = Popen(args,
+              shell=True, stdout=PIPE, stdin=PIPE)
     value = (dir1 + '\n').encode('UTF-8')  # Needed in Python 3.
     p.stdin.write(value)
     p.stdin.flush()
@@ -47,14 +49,18 @@ def render3D():
     if msg!=None and len(msg)>0:
         return {'error': 'face not properly recognized. choose a photo with an upfront person.'}, 400
 
+    from moviepy.editor import *
+    clip = (VideoFileClip("demo/outputs/texture_animation.mp4"))
+    clip.write_gif("out.gif")
+
     #print("hi5.5")
-    result = send_file("./demo/results/human_face/001_face/texture_animation.mp4", mimetype='video/mp4')
+    result = send_file("demo/outputs/out.gif", mimetype='image/gif')
 
     #print("hi6")
     return result
 
   except Exception:
-    return {'error': 'can not load your image files. check your image files'}, 400
+    return {'error': 'cannot load your image files. check your image files'}, 400
 
 @app.errorhandler(413)
 def request_entity_too_large(error):
