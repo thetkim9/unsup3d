@@ -45,6 +45,6 @@ paths:
                     type: string
                     format: binary
          '400':
-            description: Bad request (Can not load images)
+            description: Bad request (Cannot load images)
          '500':
             description: Server Side Error

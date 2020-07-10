@@ -16,39 +16,22 @@ limiter = Limiter(app, default_limits=['1 per second'])
 def index():
     return render_template('index.html')
 
-@app.route('/fit', methods=['GET', 'POST'])
-def fit():
-  if request.method == "POST" or request.method == "GET":
-    return send_file("./demo/results/human_face/001_face/texture_animation.mp4", mimetype='video/mp4')
-
+@app.route('/render3D', methods=['GET', 'POST'])
+def render3D():
   if request.method != "POST":
     return
 
-  track_event(category='ClothesFit', action='fit')
-
-  if not request.files.get('person_image'):
-    return {'error': 'must have a person image'}, 400
-
-  if not request.files.get('shirt_image'):
-    return {'error': 'must have a shirt image'}, 400
+  if not request.files.get('human_face'):
+    return {'error': 'must have a image of human face'}, 400
 
   try:
-    print("hi0")
-    person_image = Image.open(request.files['person_image'].stream)
-    shirt_image = Image.open(request.files['shirt_image'].stream)
-    if(person_image.format not in ['JPG', 'JPEG', 'PNG']):
+    human_face = Image.open(request.files['human_face'].stream)
+    if(human_face.format not in ['JPG', 'JPEG', 'PNG']):
       return {'error': 'image must be jpg, jpeg or png'}, 400
 
-    if(shirt_image.format not in ['JPG', 'JPEG', 'PNG']):
-      return {'error': 'image must be jpg, jpeg or png'}, 400
-
-    #print("hi1", person_image, shirt_image)
-    dir1 = "images/person."+person_image.format.lower()
-    person_image.save(dir1)
+    dir1 = "images/person."+human_face.format.lower()
+    human_face.save(dir1)
     #print("hi2")
-    dir2 = "images/t-shirt."+shirt_image.format.lower()
-    shirt_image.save(dir2)
-    #print("hi3")
     p = Popen(['./a.out'], shell=True, stdout=PIPE, stdin=PIPE)
     value = (dir1 + '\n').encode('UTF-8')  # Needed in Python 3.
     p.stdin.write(value)

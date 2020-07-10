@@ -4,13 +4,14 @@ from PIL import Image
 import torch
 import torch.nn as nn
 from .utils import *
+import os
 
 
 EPS = 1e-7
 
 
 class Demo():
-    def __init__(self, args):
+    def __init__(self, checkpoint, render_video):
         ## configs
         self.device = 'cuda:0' if args.gpu else 'cpu'
         self.checkpoint_path = args.checkpoint
@@ -76,7 +77,7 @@ class Demo():
             self.renderer = Renderer(cfgs)
 
     def load_checkpoint(self):
-        print(f"Loading checkpoint from {self.checkpoint_path}")
+        print("Loading checkpoint from {self.checkpoint_path}")
         cp = torch.load(self.checkpoint_path, map_location=self.device)
         self.netD.load_state_dict(cp['netD'])
         self.netA.load_state_dict(cp['netA'])
@@ -194,7 +195,7 @@ class Demo():
                 self.render_animation()
 
     def render_animation(self):
-        print(f"Rendering video animations")
+        print("Rendering video animations")
         b, h, w = self.canon_depth.shape
 
         ## morph from target view to canonical
