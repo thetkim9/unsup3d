@@ -23,10 +23,10 @@ RUN git clone https://github.com/daniilidis-group/neural_renderer.git
 RUN cd neural_renderer && python setup.py install
 RUN cd pretrained && sh download_pretrained_celeba.sh
 RUN git clone https://github.com/timesler/facenet-pytorch.git facenet_pytorch
-RUN apt-get install python3-flask
-RUN apt-get install python3-Flask-Limiter
-RUN apt-get install python3-Pillow
-RUN apt-get install python3-requests
+RUN apt-get -y install python3-flask
+RUN apt-get -y install python3-Flask-Limiter
+RUN apt-get -y install python3-Pillow
+RUN apt-get -y install python3-requests
 #RUN pip3 install -e git://github.com/hiidef/oauth2app.git#egg=flask
 #RUN pip3 install -e git://github.com/hiidef/oauth2app.git#egg=flask-limiter
 EXPOSE 80
