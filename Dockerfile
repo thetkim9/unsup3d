@@ -20,4 +20,5 @@ RUN cd neural_renderer && python setup.py install
 RUN cd pretrained && sh download_pretrained_celeba.sh
 RUN git clone https://github.com/timesler/facenet-pytorch.git facenet_pytorch
 EXPOSE 80
-#CMD python3 -m demo.demo --gpu --render_video --detect_human_face --input demo/images/human_face --result demo/results/human_face --checkpoint pretrained/pretrained_celeba/checkpoint030.pth
+CMD python3 server.py
+#python3 -m demo.demo --gpu --render_video --detect_human_face --input demo/images/human_face --result demo/results/human_face --checkpoint pretrained/pretrained_celeba/checkpoint030.pth
