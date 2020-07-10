@@ -29,8 +29,6 @@ RUN git clone https://github.com/python-pillow/Pillow.git Pillow
 RUN git clone https://github.com/psf/requests.git requests
 #RUN pip3 install -e git://github.com/hiidef/oauth2app.git#egg=flask
 #RUN pip3 install -e git://github.com/hiidef/oauth2app.git#egg=flask-limiter
-
-
 EXPOSE 80
 CMD python3 server.py
 #python3 -m demo.demo --gpu --render_video --detect_human_face --input demo/images/human_face --result demo/results/human_face --checkpoint pretrained/pretrained_celeba/checkpoint030.pth
