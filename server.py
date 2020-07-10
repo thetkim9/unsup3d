@@ -3,6 +3,7 @@ from flask_limiter import Limiter
 from PIL import Image, ImageOps
 import subprocess
 import shlex
+from moviepy.editor import *
 
 app = Flask(__name__,template_folder="./")
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 8
@@ -49,7 +50,6 @@ def render3D():
     if msg!=None and len(msg)>0:
         return {'error': 'face not properly recognized. choose a photo with an upfront person.'}, 400
 
-    from moviepy.editor import *
     clip = (VideoFileClip("demo/outputs/texture_animation.mp4"))
     clip.write_gif("out.gif")
 
