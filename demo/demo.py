@@ -13,9 +13,9 @@ EPS = 1e-7
 class Demo():
     def __init__(self, checkpoint, render_video):
         ## configs
-        self.device = 'cuda:0' if args.gpu else 'cpu'
+        self.device = 'cuda:0'
         self.checkpoint_path = args.checkpoint
-        self.detect_human_face = args.detect_human_face
+        self.detect_human_face = detect_human_face
         self.render_video = args.render_video
         self.output_size = args.output_size
         self.image_size = 64
@@ -246,7 +246,7 @@ class Demo():
         self.texture_animation = rearrange_frames(texture_animation)
 
     def save_results(self, save_dir):
-        print(f"Saving results to {save_dir}")
+        print("Saving results to {save_dir}")
         save_image(save_dir, self.input_im[0]/2+0.5, 'input_image')
         save_image(save_dir, self.depth_inv_rescaler(self.canon_depth)[0].repeat(3,1,1), 'canonical_depth')
         save_image(save_dir, self.canon_normal[0].permute(2,0,1)/2+0.5, 'canonical_normal')
