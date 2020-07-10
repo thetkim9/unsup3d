@@ -282,11 +282,11 @@ if __name__ == "__main__":
     im_list = [os.path.join(input_dir, f) for f in sorted(os.listdir(input_dir)) if is_image_file(f)]
 
     for im_path in im_list:
-        print(f"Processing {im_path}")
+        print("Processing {im_path}")
         pil_im = Image.open(im_path).convert('RGB')
         result_code = model.run(pil_im)
         if result_code == -1:
-            print(f"Failed! Skipping {im_path}")
+            print("Failed! Skipping {im_path}")
             continue
 
         save_dir = os.path.join(result_dir, os.path.splitext(os.path.basename(im_path))[0])
