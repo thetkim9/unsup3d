@@ -4,9 +4,9 @@ RUN apt-get update
 RUN conda install pytorch==1.2.0 torchvision==0.4.0 cudatoolkit=9.2 -c pytorch
 RUN apt -y install python3-pip
 #RUN pip3 install -U flask
-#RUN pip3 install Flask-Limiter
-#RUN pip3 install Pillow
-#RUN pip3 install requests
+RUN pip3 install Flask-Limiter
+RUN pip3 install Pillow
+RUN pip3 install requests
 RUN apt-get -y install curl gnupg locales unzip
 RUN conda install -c menpo opencv
 RUN conda install scikit-image matplotlib pyyaml
@@ -24,11 +24,11 @@ RUN cd neural_renderer && python setup.py install
 RUN cd pretrained && sh download_pretrained_celeba.sh
 RUN git clone https://github.com/timesler/facenet-pytorch.git facenet_pytorch
 RUN apt-get -y install python3-flask
-RUN apt-get -y install python3-Flask-Limiter
-RUN apt-get -y install python3-Pillow
-RUN apt-get -y install python3-requests
+#RUN apt-get -y install python3-Flask-Limiter
+#RUN apt-get -y install python3-Pillow
+#RUN apt-get -y install python3-requests
 #RUN pip3 install -e git://github.com/hiidef/oauth2app.git#egg=flask
 #RUN pip3 install -e git://github.com/hiidef/oauth2app.git#egg=flask-limiter
 EXPOSE 80
-CMD python3 server.py
+CMD python3.6 server.py
 #python3 -m demo.demo --gpu --render_video --detect_human_face --input demo/images/human_face --result demo/results/human_face --checkpoint pretrained/pretrained_celeba/checkpoint030.pth
