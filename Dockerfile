@@ -11,12 +11,13 @@ RUN conda install torchvision
 RUN export PATH=/usr/local/cuda/bin:$PATH
 RUN export CPATH=/usr/local/cuda/include:$CPATH
 RUN export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
-RUN pip3 install facenet-pytorch
+RUN pip3 install facenet_pytorch
 COPY . .
 RUN apt -y install git
 RUN conda install gxx_linux-64=7.3
 RUN git clone https://github.com/daniilidis-group/neural_renderer.git
 RUN cd neural_renderer && python setup.py install
 RUN cd pretrained && sh download_pretrained_celeba.sh
+RUN git clone https://github.com/timesler/facenet-pytorch.git facenet_pytorch
 EXPOSE 80
 #CMD python3 -m demo.demo --gpu --render_video --input demo/images/human_face --result demo/results/human_face --checkpoint pretrained/pretrained_celeba/checkpoint030.pth

@@ -11,7 +11,7 @@ EPS = 1e-7
 
 
 class Demo():
-    def __init__(self, checkpoint, render_video):
+    def __init__(self, args):
         ## configs
         self.device = 'cuda:0' if args.gpu else 'cpu'
         self.checkpoint_path = args.checkpoint
