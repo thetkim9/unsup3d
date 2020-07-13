@@ -40,10 +40,8 @@ def render3D():
     args = shlex.split(command_line)
     p = Popen(args,
               shell=True, stdout=PIPE, stdin=PIPE)
+    print("hi3.5")
     value = (dir1 + '\n').encode('UTF-8')  # Needed in Python 3.
-    p.stdin.write(value)
-    p.stdin.flush()
-    value = (dir2 + '\n').encode('UTF-8')  # Needed in Python 3.
     p.stdin.write(value)
     p.stdin.flush()
     p.wait()
@@ -51,11 +49,13 @@ def render3D():
 
     msg, err = p.communicate()
 
+    print("hi4.5")
     if msg!=None and len(msg)>0:
         return {'error': 'face not properly recognized. choose a photo with an upfront person.'}, 400
 
+    print("hi5")
     clip = (VideoFileClip("demo/outputs/texture_animation.mp4"))
-    clip.write_gif("out.gif")
+    clip.write_gif("outImg.gif")
 
     print("hi5.5")
     result = send_file("demo/outputs/outImg.gif", mimetype='image/gif')
