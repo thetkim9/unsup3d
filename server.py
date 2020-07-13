@@ -41,12 +41,9 @@ def render3D():
     p = Popen(args,
               shell=True, stdout=PIPE, stdin=PIPE)
     print("hi3.5")
-    value = (dir1 + '\n').encode('UTF-8')  # Needed in Python 3.
-    p.stdin.write(value)
-    p.stdin.flush()
     p.wait()
-    print("hi4")
 
+    print("hi4")
     msg, err = p.communicate()
 
     print("hi4.5")
