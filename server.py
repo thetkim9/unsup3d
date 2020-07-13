@@ -10,9 +10,11 @@ app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 8
 
 limiter = Limiter(app, default_limits=['1 per second'])
 
+'''
 @app.route("/")
 def index():
     return render_template('index.html')
+'''
 
 @app.route('/render3D', methods=['GET', 'POST'])
 def render3D():
@@ -53,7 +55,7 @@ def render3D():
     clip = (VideoFileClip("demo/outputs/texture_animation.mp4"))
     clip.write_gif("out.gif")
 
-    #print("hi5.5")
+    print("hi5.5")
     result = send_file("demo/outputs/out.gif", mimetype='image/gif')
 
     #print("hi6")
