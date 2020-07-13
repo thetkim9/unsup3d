@@ -35,32 +35,24 @@ def render3D():
     human_face.save(dir1)
 
     print("hi3")
-    ''''''
     command_line = 'python3 -m demo.demo --gpu --render_video --detect_human_face ' \
                    '--input demo/inputs --result demo/outputs ' \
                    '--checkpoint pretrained/pretrained_celeba/checkpoint030.pth'
     args = shlex.split(command_line)
     print(args)
     p = Popen(args)
-    '''
-    while True:
-      line = p.stdout.readline()
-      if not line:
-        break
-      print("asdf")
-      print(line.rstrip())
-      '''
 
-    print("hi4")
+    #print("hi4")
     msg, err = p.communicate()
     print(msg)
     print(err)
 
-    print("hi4.5")
+    #print("hi4.5")
     if msg!=None and len(msg)>0:
         return {'error': 'face not properly recognized. choose a photo with an upfront person.'}, 400
 
-    print("hi5")
+    #print("hi5")
+    '''
     print(os.path.exists("demo/outputs/inImg/texture_animation.mp4"))
     for path, subdirs, files in os.walk("demo"):
       for name in files:
@@ -68,11 +60,12 @@ def render3D():
     for path, subdirs, files in os.walk("demo/outputs"):
       for name in files:
         print(os.path.join(path, name))
+    '''
     clip = (VideoFileClip("demo/outputs/inImg/texture_animation.mp4"))
-    print("hi5.5")
+    #print("hi5.5")
     clip.write_gif("demo/outputs/outImg.gif")
 
-    print("hi6.0")
+    #print("hi6.0")
     result = send_file("demo/outputs/outImg.gif", mimetype='image/gif')
 
     return result
