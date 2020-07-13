@@ -53,7 +53,7 @@ def render3D():
     clip.write_gif("outImg.gif")
 
     print("hi5.5")
-    result = send_file("demo/outputs/outImg.gif", mimetype='image/gif')
+    result = send_file("demo/outputs/inImg/outImg.gif", mimetype='image/gif')
 
     #print("hi6")
     return result
