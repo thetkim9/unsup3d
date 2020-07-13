@@ -34,7 +34,7 @@ def render3D():
     human_face.save(dir1)
 
     print("hi3")
-    command_line = 'python3 -m demo.demo --gpu --render_video --detect_human_face ' \
+    command_line = 'python3.6 -m demo.demo --gpu --render_video --detect_human_face ' \
                    '--input demo/inputs --result demo/outputs ' \
                    '--checkpoint pretrained/pretrained_celeba/checkpoint030.pth'
     args = shlex.split(command_line)
