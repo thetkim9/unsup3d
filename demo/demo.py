@@ -266,6 +266,7 @@ class Demo():
 
 
 if __name__ == "__main__":
+    print("demo0")
     parser = argparse.ArgumentParser(description='Demo configurations.')
     parser.add_argument('--input', default='./demo/images/human_face', type=str, help='Path to the directory containing input images')
     parser.add_argument('--result', default='./demo/results/human_face', type=str, help='Path to the directory for saving results')
@@ -276,11 +277,13 @@ if __name__ == "__main__":
     parser.add_argument('--render_video', default=False, action='store_true', help='Render 3D animations to video')
     args = parser.parse_args()
 
+    print("demo1")
     input_dir = args.input
     result_dir = args.result
     model = Demo(args)
     im_list = [os.path.join(input_dir, f) for f in sorted(os.listdir(input_dir)) if is_image_file(f)]
 
+    print("demo2")
     for im_path in im_list:
         print("Processing {im_path}")
         pil_im = Image.open(im_path).convert('RGB')
