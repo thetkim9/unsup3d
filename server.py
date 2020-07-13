@@ -41,14 +41,15 @@ def render3D():
                    '--checkpoint pretrained/pretrained_celeba/checkpoint030.pth'
     args = shlex.split(command_line)
     print(args)
-    p = Popen(args, shell=True, stdout=PIPE)
-
+    p = Popen(args)
+    '''
     while True:
       line = p.stdout.readline()
       if not line:
         break
       print("asdf")
       print(line.rstrip())
+      '''
 
     print("hi4")
     msg, err = p.communicate()
