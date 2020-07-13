@@ -49,11 +49,11 @@ def render3D():
         return {'error': 'face not properly recognized. choose a photo with an upfront person.'}, 400
 
     print("hi5")
-    clip = (VideoFileClip("demo/outputs/texture_animation.mp4"))
-    clip.write_gif("outImg.gif")
+    clip = (VideoFileClip("demo/outputs/inImg/texture_animation.mp4"))
+    clip.write_gif("demo/outputs/outImg.gif")
 
     print("hi5.5")
-    result = send_file("demo/outputs/inImg/outImg.gif", mimetype='image/gif')
+    result = send_file("demo/outputs/outImg.gif", mimetype='image/gif')
 
     #print("hi6")
     return result
