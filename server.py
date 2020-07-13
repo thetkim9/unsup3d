@@ -30,7 +30,7 @@ def render3D():
       return {'error': 'image must be jpg, jpeg or png'}, 400
 
     print("hi2")
-    dir1 = "demo/inputs/in."+human_face.format.lower()
+    dir1 = "demo/inputs/inImg."+human_face.format.lower()
     human_face.save(dir1)
 
     print("hi3")
@@ -58,7 +58,7 @@ def render3D():
     clip.write_gif("out.gif")
 
     print("hi5.5")
-    result = send_file("demo/outputs/out.gif", mimetype='image/gif')
+    result = send_file("demo/outputs/outImg.gif", mimetype='image/gif')
 
     #print("hi6")
     return result
