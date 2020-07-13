@@ -19,10 +19,12 @@ def render3D():
   if request.method != "POST":
     return
 
+  print("hi0")
   if not request.files.get('person_image'):
     return {'error': 'must have a image of human face'}, 400
 
   try:
+    print("hi1")
     human_face = Image.open(request.files['person_image'].stream)
     if(human_face.format not in ['JPG', 'JPEG', 'PNG']):
       return {'error': 'image must be jpg, jpeg or png'}, 400
