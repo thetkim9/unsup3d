@@ -51,6 +51,9 @@ def render3D():
 
     print("hi5")
     print(os.path.exists("demo/outputs/inImg/texture_animation.mp4"))
+    for path, subdirs, files in os.walk("demo"):
+      for name in files:
+        print(os.path.join(path, name))
     for path, subdirs, files in os.walk("demo/outputs"):
       for name in files:
         print(os.path.join(path, name))
