@@ -21,7 +21,7 @@ RUN apt -y install git
 RUN conda install gxx_linux-64=7.3
 RUN git clone https://github.com/daniilidis-group/neural_renderer.git
 RUN cd neural_renderer && python setup.py install
-RUN cd pretrained && sh download_pretrained_celeba.sh
+#RUN cd pretrained && sh download_pretrained_celeba.sh
 RUN git clone https://github.com/timesler/facenet-pytorch.git facenet_pytorch
 RUN apt-get -y install python3-flask
 #RUN apt-get -y install python3-Flask-Limiter
