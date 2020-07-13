@@ -6,6 +6,17 @@ import shlex
 from moviepy.editor import *
 import os
 
+def run_command(command):
+  process = Popen(shlex.split(command), stdout=PIPE)
+  while True:
+    output = process.stdout.readline()
+    if output == '' and process.poll() is not None:
+      break
+    if output:
+      print output.strip()
+  rc = process.poll()
+  return rc
+
 app = Flask(__name__,template_folder="./")
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 8
 
@@ -35,10 +46,12 @@ def render3D():
     human_face.save(dir1)
 
     print("hi3")
-    command_line = 'python3.6 -m demo.demo --gpu --render_video --detect_human_face ' \
+    ''''''
+    command_line = 'python3 -m demo.demo --gpu --render_video --detect_human_face ' \
                    '--input demo/inputs --result demo/outputs ' \
                    '--checkpoint pretrained/pretrained_celeba/checkpoint030.pth'
     args = shlex.split(command_line)
+    print(args)
     p = Popen(args,
               shell=True, stdout=PIPE, stdin=PIPE)
 
@@ -46,7 +59,7 @@ def render3D():
       line = p.stdout.readline()
       if not line:
         break
-      print (line.rstrip())
+      print (line.rstrip(), "asdf")
 
     print("hi4")
     msg, err = p.communicate()
