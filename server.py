@@ -25,31 +25,31 @@ def render3D():
     return {'error': 'must have a image of human face'}, 400
 
   try:
-    print("hi1")
+    #print("hi1")
     human_face = Image.open(request.files['person_image'].stream)
     if(human_face.format not in ['JPG', 'JPEG', 'PNG']):
-      return {'error': 'image must be jpg, jpeg or png'}, 400
+      return {'error': 'image must be jpg, jpeg or png'}, 401
 
-    print("hi2")
+    #print("hi2")
     dir1 = "demo/inputs/inImg."+human_face.format.lower()
     human_face.save(dir1)
 
-    print("hi3")
+    #print("hi3")
     command_line = 'python3 -m demo.demo --gpu --render_video --detect_human_face ' \
                    '--input demo/inputs --result demo/outputs ' \
                    '--checkpoint pretrained/pretrained_celeba/checkpoint030.pth'
     args = shlex.split(command_line)
-    print(args)
+    #print(args)
     p = Popen(args)
 
     #print("hi4")
     msg, err = p.communicate()
-    print(msg)
-    print(err)
+    #print(msg)
+    #print(err)
 
     #print("hi4.5")
     if msg!=None and len(msg)>0:
-        return {'error': 'face not properly recognized. choose a photo with an upfront person.'}, 400
+        return {'error': 'face not properly recognized. choose a photo with an upfront person.'}, 402
 
     #print("hi5")
     '''
@@ -71,7 +71,7 @@ def render3D():
     return result
 
   except Exception:
-    return {'error': 'cannot load your image files. check your image files'}, 400
+    return {'error': 'cannot load your image files. check your image files'}, 403
 
 @app.errorhandler(413)
 def request_entity_too_large(error):
