@@ -29,9 +29,11 @@ def render3D():
     if(human_face.format not in ['JPG', 'JPEG', 'PNG']):
       return {'error': 'image must be jpg, jpeg or png'}, 400
 
+    print("hi2")
     dir1 = "demo/inputs/in."+human_face.format.lower()
     human_face.save(dir1)
-    print("hi2")
+
+    print("hi3")
     command_line = 'python3 -m demo.demo --gpu --render_video --detect_human_face ' \
                    '--input demo/inputs --result demo/outputs ' \
                    '--checkpoint pretrained/pretrained_celeba/checkpoint030.pth'
