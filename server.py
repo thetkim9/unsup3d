@@ -50,9 +50,10 @@ def render3D():
 
     print("hi5")
     clip = (VideoFileClip("demo/outputs/inImg/texture_animation.mp4"))
+    print("hi5.5")
     clip.write_gif("demo/outputs/outImg.gif")
 
-    print("hi5.5")
+    print("hi6.0")
     result = send_file("demo/outputs/outImg.gif", mimetype='image/gif')
 
     #print("hi6")
