@@ -41,10 +41,12 @@ def render3D():
     args = shlex.split(command_line)
     p = Popen(args,
               shell=True, stdout=PIPE, stdin=PIPE)
+
     while True:
       line = p.stdout.readline()
       if not line:
         break
+      print (line.rstrip())
 
     print("hi4")
     msg, err = p.communicate()
