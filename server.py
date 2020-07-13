@@ -40,8 +40,6 @@ def render3D():
     args = shlex.split(command_line)
     p = Popen(args,
               shell=True, stdout=PIPE, stdin=PIPE)
-    print("hi3.5")
-    p.wait()
 
     print("hi4")
     msg, err = p.communicate()
