@@ -4,7 +4,7 @@ from PIL import Image, ImageOps
 from subprocess import Popen, PIPE
 import shlex
 from moviepy.editor import *
-from os import path
+import os
 
 app = Flask(__name__,template_folder="./")
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 8
@@ -50,7 +50,10 @@ def render3D():
         return {'error': 'face not properly recognized. choose a photo with an upfront person.'}, 400
 
     print("hi5")
-    print(path.exists("demo/outputs/inImg/texture_animation.mp4"))
+    print(os.path.exists("demo/outputs/inImg/texture_animation.mp4"))
+    for path, subdirs, files in os.walk("demo/outputs"):
+      for name in files:
+        print(os.path.join(path, name))
     clip = (VideoFileClip("demo/outputs/inImg/texture_animation.mp4"))
     print("hi5.5")
     clip.write_gif("demo/outputs/outImg.gif")
@@ -58,7 +61,6 @@ def render3D():
     print("hi6.0")
     result = send_file("demo/outputs/outImg.gif", mimetype='image/gif')
 
-    #print("hi6")
     return result
 
   except Exception:
