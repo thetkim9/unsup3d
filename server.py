@@ -6,17 +6,6 @@ import shlex
 from moviepy.editor import *
 import os
 
-def run_command(command):
-  process = Popen(shlex.split(command), stdout=PIPE)
-  while True:
-    output = process.stdout.readline()
-    if output == '' and process.poll() is not None:
-      break
-    if output:
-      print output.strip()
-  rc = process.poll()
-  return rc
-
 app = Flask(__name__,template_folder="./")
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 8
 
@@ -52,14 +41,14 @@ def render3D():
                    '--checkpoint pretrained/pretrained_celeba/checkpoint030.pth'
     args = shlex.split(command_line)
     print(args)
-    p = Popen(args,
-              shell=True, stdout=PIPE, stdin=PIPE)
+    p = Popen(args, shell=True, stdout=PIPE)
 
     while True:
       line = p.stdout.readline()
       if not line:
         break
-      print (line.rstrip(), "asdf")
+      print("asdf")
+      print(line.rstrip())
 
     print("hi4")
     msg, err = p.communicate()
