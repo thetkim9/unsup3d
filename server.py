@@ -44,6 +44,8 @@ def render3D():
 
     print("hi4")
     msg, err = p.communicate()
+    print(msg)
+    print(err)
 
     print("hi4.5")
     if msg!=None and len(msg)>0:
