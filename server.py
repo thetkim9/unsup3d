@@ -10,11 +10,9 @@ app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 8
 
 limiter = Limiter(app, default_limits=['1 per second'])
 
-'''
 @app.route("/")
 def index():
     return render_template('index.html')
-'''
 
 @app.route('/render3D', methods=['GET', 'POST'])
 def render3D():
@@ -31,7 +29,7 @@ def render3D():
 
     dir1 = "demo/inputs/in."+human_face.format.lower()
     human_face.save(dir1)
-    #print("hi2")
+    print("hi2")
     command_line = 'python3 -m demo.demo --gpu --render_video --detect_human_face ' \
                    '--input demo/inputs --result demo/outputs ' \
                    '--checkpoint pretrained/pretrained_celeba/checkpoint030.pth'
@@ -45,7 +43,7 @@ def render3D():
     p.stdin.write(value)
     p.stdin.flush()
     p.wait()
-    #print("hi4")
+    print("hi4")
 
     msg, err = p.communicate()
 
