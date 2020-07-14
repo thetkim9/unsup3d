@@ -48,9 +48,11 @@ def render3D():
       if data!= str.encode(" ") and data!= str.encode("") and data is not None:
         count += 1
         print(data)
+        '''
         print(type(data))
         print(str(data))
         print(str.encode(" "))
+        '''
     print(count)
     #msg, err = p.communicate()
     #print(msg)
