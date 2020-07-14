@@ -40,10 +40,12 @@ def render3D():
                    '--input demo/inputs --result demo/outputs ' \
                    '--checkpoint pretrained/pretrained_celeba/checkpoint030.pth'
     args = shlex.split(command_line)
-    process = Popen(args, stdout=PIPE)
-    for line in process.stdout.readlines():
-      print(line)
-      sys.stdout.flush()
+    with Popen(args, stdout=PIPE, bufsize=1,
+               universal_newlines=True) as p:
+      for line in p.stdout:
+        #p.stdout.flush()
+        print(line, end='')
+
     '''
     msg, err = proc.communicate()
     '''
