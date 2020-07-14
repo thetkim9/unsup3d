@@ -36,22 +36,24 @@ def render3D():
     human_face.save(dir1)
 
     #print("hi3")
-    command_line = 'python3 -m demo.demo --gpu --render_video --detect_human_face ' \
+    command_line = 'python3 -u -m demo.demo --gpu --render_video --detect_human_face ' \
                    '--input demo/inputs --result demo/outputs ' \
                    '--checkpoint pretrained/pretrained_celeba/checkpoint030.pth'
     args = shlex.split(command_line)
 
-    p = Popen(args)
-    print(sys.stdout.read(1))
-    msg, err = p.communicate()
+    proc = Popen(args, stdout=PIPE)
+    while proc.poll() is None:  # Check the the child process is still running
+      data = proc.stdout.read(1)  # Note: it reads as binary, not text
+      print(data)
+    #msg, err = p.communicate()
     #print(msg)
     #print(err)
 
     #print("hi4.5")
-
+    '''
     if msg!=None and len(msg)>0:
         return {'error': 'face not properly recognized. choose a photo with an upfront person.'}, 402
-
+    '''
     #print("hi5")
     '''
     print(os.path.exists("demo/outputs/inImg/texture_animation.mp4"))
