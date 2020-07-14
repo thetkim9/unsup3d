@@ -5,6 +5,7 @@ from subprocess import Popen, PIPE
 import shlex
 from moviepy.editor import *
 import os
+import sys
 
 app = Flask(__name__,template_folder="./")
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 8
@@ -39,10 +40,14 @@ def render3D():
                    '--input demo/inputs --result demo/outputs ' \
                    '--checkpoint pretrained/pretrained_celeba/checkpoint030.pth'
     args = shlex.split(command_line)
-    proc = Popen(args, stdout=PIPE)
-    while proc.poll() is None:
-      output = proc.stdout.readline()
-      print(output)
+    process = Popen(args, stdout=PIPE)
+    while True:
+      out = process.stdout.read(1)
+      if out == '' and process.poll() != None:
+        break
+      if out != '':
+        sys.stdout.write(out)
+        sys.stdout.flush()
     '''
     msg, err = proc.communicate()
     '''
