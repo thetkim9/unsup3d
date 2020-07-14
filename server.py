@@ -45,8 +45,7 @@ def render3D():
       if output == '' and process.poll() is not None:
         break
       if output:
-        print output.strip()
-    rc = process.poll()
+        print(output.strip())
     '''
     msg, err = proc.communicate()
     '''
