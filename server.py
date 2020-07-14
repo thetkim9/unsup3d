@@ -20,7 +20,7 @@ def render3D():
   if request.method != "POST":
     return
 
-  print("hi0")
+  #print("hi0")
   if not request.files.get('person_image'):
     return {'error': 'must have a image of human face'}, 400
 
