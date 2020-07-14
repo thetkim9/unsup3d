@@ -49,6 +49,8 @@ def render3D():
         count += 1
         print(data)
         print(type(data))
+        print(str(data))
+        print(str.encode(" "))
     print(count)
     #msg, err = p.communicate()
     #print(msg)
