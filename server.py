@@ -5,7 +5,6 @@ from subprocess import Popen, PIPE
 import shlex
 from moviepy.editor import *
 import os
-import sys
 
 app = Flask(__name__,template_folder="./")
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 8
@@ -42,12 +41,12 @@ def render3D():
     args = shlex.split(command_line)
     process = Popen(args, stdout=PIPE)
     while True:
-      out = process.stdout.read(1)
-      if out == '' and process.poll() != None:
+      output = process.stdout.readline()
+      if output == '' and process.poll() is not None:
         break
-      if out != '':
-        sys.stdout.write(out)
-        sys.stdout.flush()
+      if output:
+        print output.strip()
+    rc = process.poll()
     '''
     msg, err = proc.communicate()
     '''
