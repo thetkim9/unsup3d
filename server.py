@@ -39,17 +39,23 @@ def render3D():
                    '--input demo/inputs --result demo/outputs ' \
                    '--checkpoint pretrained/pretrained_celeba/checkpoint030.pth'
     args = shlex.split(command_line)
-    #print(args)
+    '''
     p = Popen(args)
-
-    #print("hi4")
     msg, err = p.communicate()
+    '''
+    with Popen(args, stdout=PIPE, bufsize=1,
+               universal_newlines=True) as p:
+      for line in p.stdout:
+        print(line, end="")
+      print("?")
     #print(msg)
     #print(err)
 
     #print("hi4.5")
+    '''
     if msg!=None and len(msg)>0:
         return {'error': 'face not properly recognized. choose a photo with an upfront person.'}, 402
+    '''
 
     #print("hi5")
     '''
