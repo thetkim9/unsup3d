@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, send_file
 from flask_limiter import Limiter
 from PIL import Image, ImageOps
-from subprocess import Popen, PIPE, STDOUT
+from subprocess import Popen, PIPE
 import shlex
 from moviepy.editor import *
 import os
@@ -41,23 +41,16 @@ def render3D():
                    '--checkpoint pretrained/pretrained_celeba/checkpoint030.pth'
     args = shlex.split(command_line)
 
-    with Popen(args, stdout=PIPE, stderr=subprocess.STDOUT) as p:
-      for line in iter(p.stdout.readline, ''):
-        line = line.replace('\r', '').replace('\n', '')
-        print(line)
-        sys.stdout.flush()
-
-    '''
-    msg, err = proc.communicate()
-    '''
+    p = Popen(args)
+    print(sys.stdout.read(1))
+    msg, err = p.communicate()
     #print(msg)
     #print(err)
 
     #print("hi4.5")
-    '''
+
     if msg!=None and len(msg)>0:
         return {'error': 'face not properly recognized. choose a photo with an upfront person.'}, 402
-    '''
 
     #print("hi5")
     '''
