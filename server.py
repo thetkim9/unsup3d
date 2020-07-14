@@ -44,7 +44,7 @@ def render3D():
     with Popen(args, stdout=PIPE, stderr=subprocess.STDOUT) as p:
       for line in iter(p.stdout.readline, ''):
         line = line.replace('\r', '').replace('\n', '')
-        print line
+        print(line)
         sys.stdout.flush()
 
     '''
