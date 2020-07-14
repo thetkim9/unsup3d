@@ -1,10 +1,11 @@
 from flask import Flask, render_template, request, send_file
 from flask_limiter import Limiter
 from PIL import Image, ImageOps
-from subprocess import Popen, PIPE
+from subprocess import Popen, PIPE, STDOUT
 import shlex
 from moviepy.editor import *
 import os
+import sys
 
 app = Flask(__name__,template_folder="./")
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 8
@@ -40,12 +41,9 @@ def render3D():
                    '--checkpoint pretrained/pretrained_celeba/checkpoint030.pth'
     args = shlex.split(command_line)
     process = Popen(args, stdout=PIPE)
-    while True:
-      output = process.stdout.readline()
-      if output == '' and process.poll() is not None:
-        break
-      if output:
-        print(output.strip())
+    for line in process.stdout.readlines():
+      print(line)
+      sys.stdout.flush()
     '''
     msg, err = proc.communicate()
     '''
