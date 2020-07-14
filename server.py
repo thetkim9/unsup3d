@@ -45,9 +45,10 @@ def render3D():
     count = 0
     while proc.poll() is None:  # Check the the child process is still running
       data = proc.stdout.read(1)  # Note: it reads as binary, not text
-      if data!= b" " and data!= b"" and data is not None:
+      if data!= " " and data!= "" and data is not None:
         count += 1
         print(data)
+        print(type(data))
     print(count)
     #msg, err = p.communicate()
     #print(msg)
