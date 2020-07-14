@@ -42,9 +42,13 @@ def render3D():
     args = shlex.split(command_line)
 
     proc = Popen(args, stdout=PIPE)
+    count = 0
     while proc.poll() is None:  # Check the the child process is still running
       data = proc.stdout.read(1)  # Note: it reads as binary, not text
-      print(data)
+      if (data!=" "):
+        count += 1
+        print(data)
+    print(count)
     #msg, err = p.communicate()
     #print(msg)
     #print(err)
