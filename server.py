@@ -39,15 +39,13 @@ def render3D():
                    '--input demo/inputs --result demo/outputs ' \
                    '--checkpoint pretrained/pretrained_celeba/checkpoint030.pth'
     args = shlex.split(command_line)
+    proc = Popen(args, stdout=PIPE)
+    while proc.poll() is None:
+      output = proc.stdout.readline()
+      print(output)
     '''
-    p = Popen(args)
-    msg, err = p.communicate()
+    msg, err = proc.communicate()
     '''
-    with Popen(args, stdout=PIPE, bufsize=1,
-               universal_newlines=True) as p:
-      for line in p.stdout:
-        print(line, end="")
-      print("?")
     #print(msg)
     #print(err)
 
