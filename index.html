@@ -36,6 +36,7 @@
                 <script src="jquery-3.5.1.js"></script>
                 <script>
                     function check_progress(task_id, progress_bar) {
+                    jQuery.noConflict();
                     if (typeof jQuery === 'undefined') {
                       alert("not here")
                     } else {
