@@ -10,8 +10,8 @@ function check_progress(task_id, progress_bar) {
               setTimeout(check_progress, 1000)
           }
       })
-  }
-  document.getElementById("submit").onclick = () => {
+}
+document.getElementById("submit").onclick = () => {
     var formData = new FormData();
     var source = document.getElementById('source').files[0];
     //const { v4: uuidv4 } = require('uuid');
