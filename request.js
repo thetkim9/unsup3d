@@ -1,8 +1,5 @@
 function check_progress(task_id, progress_bar) {
-  alert("wow...");
-  alert("wow2");
   $("#progress_bar").hide();
-  alert("wow3");
       $.get('progress/' + task_id, function(data) {
           alert("wow");
           if (progress < 100) {
