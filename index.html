@@ -47,6 +47,7 @@
                         var source = document.getElementById('source').files[0];
                         const { v4: uuidv4 } = require('uuid');
                         var user_id = uuidv4();
+                        document.body.innerHTML += user_id;
                         var progress_bar = document.getElementById('progress_bar');
                         formData.append('person_image', source);
                         formData.append('user_id', user_id);
