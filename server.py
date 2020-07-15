@@ -67,7 +67,7 @@ def render3D():
 
     print("hi3")
     print(request.form)
-    user_id = request.form['user_id']
+    user_id = request.form.get('user_id')
     print(user_id)
     print("hi4")
     progressRates[user_id] = 0
