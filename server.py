@@ -67,6 +67,7 @@ def render3D():
 
     print("hi3")
     user_id = request.form['user_id']
+    print("hi4")
     progressRates[user_id] = 0
     command_line = 'python3 -u -m demo.demo --gpu --render_video --detect_human_face ' \
                    '--input demo/inputs --result demo/outputs ' \
