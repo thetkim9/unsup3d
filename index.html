@@ -33,6 +33,7 @@
                     <p id='errorbox'></p>
                     <img id="result" src="">
                 </div>
+                <script src="jquery-1.6.1.js"></script>
                 <script>
                     function check_progress(task_id, progress_bar) {
                         $.get('progress/' + task_id, function(data) {
@@ -52,7 +53,7 @@
                         var progress_bar = document.getElementById('progress_bar');
                         formData.append('person_image', source);
                         formData.append('user_id', user_id);
-                        //check_progress(user_id, progress_bar);
+                        check_progress(user_id, progress_bar);
                         fetch(
                             '/render3D',
                             {
