@@ -36,13 +36,11 @@
                 <script src="jquery-3.5.1.js"></script>
                 <script>
                     function check_progress(task_id, progress_bar) {
-                    jQuery.noConflict();
-                    if (typeof jQuery === 'undefined') {
-                      alert("not here")
-                    } else {
-                      alert("here")
-                    }
-                        jQuery.get('progress/' + task_id, function(data) {
+                    alert("wow...");
+                    alert("wow2");
+                    $("#progress_bar").hide();
+                    alert("wow3");
+                        $.get('progress/' + task_id, function(data) {
                             alert("wow");
                             if (progress < 100) {
                                 progress_bar.set_progress(progress)
