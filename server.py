@@ -66,7 +66,8 @@ def render3D():
     #exporting_threads[thread_id].start()
 
     print("hi3")
-    user_id = request.files['user_id']
+    print(request.form)
+    user_id = request.form['user_id']
     print(user_id)
     print("hi4")
     progressRates[user_id] = 0
