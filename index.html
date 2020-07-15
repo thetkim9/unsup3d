@@ -37,7 +37,7 @@
                 <script>
                     function check_progress(task_id, progress_bar) {
                     alert("wow...");
-                    $("#hello").dialog();
+                    $("#progress_bar").hide();
                         $.get('progress/' + task_id, function(data) {
                             alert("wow");
                             if (progress < 100) {
