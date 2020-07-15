@@ -67,6 +67,10 @@ def render3D():
 
     print("hi3")
     print(request.form)
+    print(request.args)
+    print(request.files)
+    print(request.values)
+    print(request.json)
     user_id = request.form.get('user_id')
     print(user_id)
     print("hi4")
