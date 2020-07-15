@@ -4,13 +4,37 @@ from PIL import Image, ImageOps
 from subprocess import Popen, PIPE
 import shlex
 from moviepy.editor import *
-import os
-import sys
+import threading
+import time
+
+'''
+class ExportingThread(threading.Thread):
+  def __init__(self):
+    self.progress = 0
+    super().__init__()
+
+  def run(self):
+    command_line = 'python3 -u -m demo.demo --gpu --render_video --detect_human_face ' \
+                   '--input demo/inputs --result demo/outputs ' \
+                   '--checkpoint pretrained/pretrained_celeba/checkpoint030.pth'
+    args = shlex.split(command_line)
+
+    proc = Popen(args, stdout=PIPE)
+    # 131 single characters stdout from subprocess
+    while proc.poll() is None:  # Check the the child process is still running
+      data = proc.stdout.read(1)  # Note: it reads as binary, not text
+      if data != str.encode(" ") and data != str.encode("") and data is not None:
+        #print(data)
+        self.progress += 0.76
+'''
+
+#exporting_threads = {}
+progressRates = {}
 
 app = Flask(__name__,template_folder="./")
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 8
 
-limiter = Limiter(app, default_limits=['1 per second'])
+#limiter = Limiter(app, default_limits=['1 per second'])
 
 @app.route("/")
 def index():
@@ -35,25 +59,27 @@ def render3D():
     dir1 = "demo/inputs/inImg."+human_face.format.lower()
     human_face.save(dir1)
 
+    #global exporting_threads
+
+    #thread_id = request.form['user_id']
+    #exporting_threads[thread_id] = ExportingThread()
+    #exporting_threads[thread_id].start()
+
     #print("hi3")
+    user_id = request.form['user_id']
+    progressRates[user_id] = 0
     command_line = 'python3 -u -m demo.demo --gpu --render_video --detect_human_face ' \
                    '--input demo/inputs --result demo/outputs ' \
                    '--checkpoint pretrained/pretrained_celeba/checkpoint030.pth'
     args = shlex.split(command_line)
 
     proc = Popen(args, stdout=PIPE)
-    count = 0
+    # 131 single characters stdout from subprocess
     while proc.poll() is None:  # Check the the child process is still running
       data = proc.stdout.read(1)  # Note: it reads as binary, not text
-      if data!= str.encode(" ") and data!= str.encode("") and data is not None:
-        count += 1
-        print(data)
-        '''
-        print(type(data))
-        print(str(data))
-        print(str.encode(" "))
-        '''
-    print(count)
+      if data != str.encode(" ") and data != str.encode("") and data is not None:
+        #print(data)
+        progressRates[user_id] += 0.76
     #msg, err = p.communicate()
     #print(msg)
     #print(err)
@@ -84,6 +110,19 @@ def render3D():
 
   except Exception:
     return {'error': 'cannot load your image files. check your image files'}, 403
+
+'''
+@app.route('/progress/<int:user_id>')
+def progress(user_id):
+    global exporting_threads
+
+    return str(exporting_threads[user_id].progress)
+'''
+@app.route('/progress/<int:user_id>')
+def progress(user_id):
+    global exporting_threads
+
+    return str(exporting_threads[user_id].progress)
 
 @app.errorhandler(413)
 def request_entity_too_large(error):
