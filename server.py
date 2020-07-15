@@ -50,12 +50,12 @@ def render3D():
     return {'error': 'must have a image of human face'}, 400
 
   try:
-    #print("hi1")
+    print("hi1")
     human_face = Image.open(request.files['person_image'].stream)
     if(human_face.format not in ['JPG', 'JPEG', 'PNG']):
       return {'error': 'image must be jpg, jpeg or png'}, 401
 
-    #print("hi2")
+    print("hi2")
     dir1 = "demo/inputs/inImg."+human_face.format.lower()
     human_face.save(dir1)
 
@@ -65,7 +65,7 @@ def render3D():
     #exporting_threads[thread_id] = ExportingThread()
     #exporting_threads[thread_id].start()
 
-    #print("hi3")
+    print("hi3")
     user_id = request.form['user_id']
     progressRates[user_id] = 0
     command_line = 'python3 -u -m demo.demo --gpu --render_video --detect_human_face ' \
@@ -84,12 +84,12 @@ def render3D():
     #print(msg)
     #print(err)
 
-    #print("hi4.5")
+    print("hi4.5")
     '''
     if msg!=None and len(msg)>0:
         return {'error': 'face not properly recognized. choose a photo with an upfront person.'}, 402
     '''
-    #print("hi5")
+    print("hi5")
     '''
     print(os.path.exists("demo/outputs/inImg/texture_animation.mp4"))
     for path, subdirs, files in os.walk("demo"):
@@ -100,10 +100,10 @@ def render3D():
         print(os.path.join(path, name))
     '''
     clip = (VideoFileClip("demo/outputs/inImg/texture_animation.mp4"))
-    #print("hi5.5")
+    print("hi5.5")
     clip.write_gif("demo/outputs/outImg.gif")
 
-    #print("hi6.0")
+    print("hi6.0")
     result = send_file("demo/outputs/outImg.gif", mimetype='image/gif')
 
     return result
