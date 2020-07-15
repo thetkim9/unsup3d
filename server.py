@@ -120,9 +120,8 @@ def progress(user_id):
 '''
 @app.route('/progress/<int:user_id>')
 def progress(user_id):
-    global exporting_threads
-
-    return str(exporting_threads[user_id].progress)
+    global progressRates
+    return progressRates[user_id]
 
 @app.errorhandler(413)
 def request_entity_too_large(error):
