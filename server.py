@@ -127,6 +127,7 @@ def progress(user_id):
 '''
 @app.route('/progress/<int:user_id>')
 def progress(user_id):
+    print("progress request received...")
     global progressRates
     return progressRates[user_id]
 
