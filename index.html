@@ -41,7 +41,7 @@
                     } else {
                       alert("here")
                     }
-                        $.get('progress/' + task_id, function(data) {
+                        jQuery.get('progress/' + task_id, function(data) {
                             alert("wow");
                             if (progress < 100) {
                                 progress_bar.set_progress(progress)
