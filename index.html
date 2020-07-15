@@ -36,6 +36,7 @@
                 <script src="jquery-1.6.1.js"></script>
                 <script>
                     function check_progress(task_id, progress_bar) {
+                    document.body.innerHTML += "progress_bar";
                         $.get('progress/' + task_id, function(data) {
                             if (progress < 100) {
                                 progress_bar.set_progress(progress)
