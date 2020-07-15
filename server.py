@@ -31,7 +31,7 @@ class ExportingThread(threading.Thread):
 #exporting_threads = {}
 progressRates = {}
 
-app = Flask(__name__,template_folder="./")
+app = Flask(__name__, static_url_path="./", template_folder="./")
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 8
 
 #limiter = Limiter(app, default_limits=['1 per second'])
