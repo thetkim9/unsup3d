@@ -79,7 +79,7 @@ def render3D():
     while proc.poll() is None:  # Check the the child process is still running
       data = proc.stdout.read(1)  # Note: it reads as binary, not text
       if data != str.encode(" ") and data != str.encode("") and data is not None:
-        progressRates[user_id] += 0.76
+        progressRates[user_id] += 0.77
         pass
     #msg, err = p.communicate()
     #print(msg)
