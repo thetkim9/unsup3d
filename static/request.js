@@ -8,7 +8,7 @@ function check_progress(task_id, progress_bar) {
           }
       })
     }
-    setInterval(worker, 1000);
+    setInterval(worker, 2000);
 }
 document.getElementById("submit").onclick = () => {
     var formData = new FormData();
