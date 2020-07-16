@@ -73,14 +73,14 @@ def render3D():
                    '--checkpoint pretrained/pretrained_celeba/checkpoint030.pth'
     args = shlex.split(command_line)
 
-    global progressRates
+    #global progressRates
     proc = Popen(args, stdout=PIPE)
     # 131 single characters stdout from subprocess
     while proc.poll() is None:  # Check the the child process is still running
       data = proc.stdout.read(1)  # Note: it reads as binary, not text
       if data != str.encode(" ") and data != str.encode("") and data is not None:
-        print(progressRates[user_id])
-        progressRates[user_id] += 0.76
+        #print(progressRates[user_id])
+        #progressRates[user_id] += 0.76
     #msg, err = p.communicate()
     #print(msg)
     #print(err)
