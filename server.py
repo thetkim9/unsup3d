@@ -123,6 +123,7 @@ def progress(user_id):
     print("progress request received...")
     global progressRates
     if user_id not in progressRates:
+      print("start")
       progressRates[user_id] = 0
     print(progressRates[user_id])
     return str(progressRates[user_id])
