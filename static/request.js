@@ -2,6 +2,7 @@ function check_progress(task_id, progress_bar) {
     var progress_bar = document.getElementById("progress_bar");
     var dots = document.getElementById("dots");
     var time_spent = document.getElementById("time");
+    document.getElementById("load").style.visibility = "visible";
     var timer;
     var temp = [".", "..", "..."];
     var time = 0;

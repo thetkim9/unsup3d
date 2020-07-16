@@ -22,13 +22,16 @@
                 <hr class="solid">
 
                 <h2>Upload </h2>
+                <p>We recommend uploading images that mostly consist of human faces</p>
+                <p>since images that require tough face recognition take longer to operate</p>
+                <p>We recommend uploading images that mostly consist of human faces</p>
                 <div id = 'inputImage'>
                     <label for="source">person image : </label>
                     <input type = 'file' id = 'source' style="margin-right: 10px; margin-bottom: 10px;">
                     <button id = "submit" type='submit' class="btn btn-primary btn-lg" style="margin-left: auto;"> Run </button>
                 </div>
                 <progress id="progress_bar" value="0" max="100"> </progress>
-                <p>loading<span id="dots">.</span> time spent: <span id="time">0</span></p>
+                <p id="load">loading<span id="dots">.</span> time spent: <span id="time">0</span></p>
 
                 <div id ='resultBox' style="margin-left: auto; margin-right: auto;">
                     <p id='errorbox'></p>
