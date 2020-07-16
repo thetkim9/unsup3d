@@ -1,10 +1,9 @@
 function check_progress(task_id, progress_bar) {
   $("#progress_bar").hide();
       $.get('progress/' + task_id, function(data) {
-          alert("wow");
           if (progress < 100) {
-              progress_bar.set_progress(progress)
-              setTimeout(check_progress, 1000)
+              progress_bar.set_progress(progress);
+              setInterval(check_progress, 1000);
           }
       })
 }
