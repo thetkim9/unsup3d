@@ -129,6 +129,8 @@ def progress(user_id):
 def progress(user_id):
     print("progress request received...")
     global progressRates
+    if user_id not in progressRates:
+      progressRates[user_id] = 0
     return progressRates[user_id]
 
 @app.errorhandler(413)
