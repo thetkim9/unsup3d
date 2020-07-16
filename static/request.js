@@ -42,8 +42,7 @@ document.getElementById("submit").onclick = () => {
         }
         else{
             document.body.innerHTML += response.status
-            throw Error("rendering error")
-
+            throw Error("rendering error:")
         }
     })
     .then(response => response.blob())
