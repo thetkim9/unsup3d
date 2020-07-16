@@ -131,7 +131,7 @@ def progress(user_id):
     global progressRates
     if user_id not in progressRates:
       progressRates[user_id] = 0
-    return progressRates[user_id]
+    return str(progressRates[user_id])
 
 @app.errorhandler(413)
 def request_entity_too_large(error):
