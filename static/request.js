@@ -1,6 +1,7 @@
 function check_progress(task_id, progress_bar) {
     var progress_bar = document.getElementById("progress_bar");
     var dots = document.getElementById("dots");
+    var time_spent = document.getElementById("time");
     var timer;
     var temp = [".", "..", "..."];
     var time = 0;
@@ -8,6 +9,7 @@ function check_progress(task_id, progress_bar) {
       $.get('progress/' + task_id, function(progress) {
           progress_bar.value = Math.min(parseInt(progress), 100).toString();
           time += 1;
+          time_spent.innerHTML = time;
           dots.innerHTML = temp[time%3];
           if (parseInt(progress)>=100) {
             clearInterval(timer);
