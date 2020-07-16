@@ -80,7 +80,7 @@ def render3D():
       data = proc.stdout.read(1)  # Note: it reads as binary, not text
       if data != str.encode(" ") and data != str.encode("") and data is not None:
         print(progressRates)
-        progressRates[user_id] += 0.76
+        progressRates[user_id] += 1
         pass
     #msg, err = p.communicate()
     #print(msg)
@@ -123,9 +123,9 @@ def progress(user_id):
 @app.route('/progress/<int:user_id>')
 def progress(user_id):
     global progressRates
-    if user_id not in progressRates.keys():
+    if str(user_id) not in progressRates.keys():
       print("start")
-      progressRates[user_id] = 0
+      progressRates[str(user_id)] = 0
     print(progressRates[user_id])
     return str(progressRates[user_id])
 
