@@ -1,9 +1,8 @@
 function check_progress(task_id, progress_bar) {
     function worker() {
       $.get('progress/' + task_id, function(progress) {
-          document.body.innerHTML += Math.min(parseInt(progress), 100).toString();
           document.getElementById("progress_bar").value = Math.min(parseInt(progress), 100).toString();
-          if (progress>=100) {
+          if (parseInt(progress)>=100) {
             clearInterval(worker);
           }
       })
@@ -16,7 +15,6 @@ document.getElementById("submit").onclick = () => {
     //const { v4: uuidv4 } = require('uuid');
     //var user_id = uuidv4();
     var user_id = Math.floor(Math.random()*1000000000);
-    document.body.innerHTML += user_id;
     var progress_bar = document.getElementById('progress_bar');
     formData.append('person_image', source);
     formData.append('user_id', user_id);

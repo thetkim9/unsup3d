@@ -123,9 +123,9 @@ def progress(user_id):
 def progress(user_id):
     global progressRates
     if user_id not in progressRates.keys():
-      print("start")
+      #print("start")
       progressRates[user_id] = 0
-    print(progressRates[user_id])
+    #print(progressRates[user_id])
     return str(progressRates[user_id])
 
 @app.errorhandler(413)
