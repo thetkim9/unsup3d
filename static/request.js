@@ -4,7 +4,7 @@ function check_progress(task_id, progress_bar) {
       document.body.innerHTML += progress;
           if (progress < 100) {
               document.body.innerHTML += progress;
-              progress_bar.set_progress(progress);
+              document.getElementById("progress_bar").value = progress;
           }
       })
     }
