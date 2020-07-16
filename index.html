@@ -29,13 +29,13 @@
             <div class="jumbotron mt-3">
 
                 <h1>3D Rendering of Human Face</h1>
-                <A>Git Hub repository : </A> <A href="https://github.com/thetkim9/unsup3d"> unsup3d</A>
+                <A>Git Hub Repo : </A> <A href="https://github.com/thetkim9/unsup3d"> unsup3d</A>
                 <br>
                 <A>Testing API : </A> <A href="https://ainize.ai/thetkim9/unsup3d"> on Ainize </A>
 
                 <hr class="solid">
 
-                <h2>Upload </h2>
+                <h3>Upload </h3>
                 <p>We recommend uploading images that mostly consist of human faces
                     since images that require tough face recognition take longer to operate</p>
                 <p>Operation generally takes around 20~30 seconds</p>
@@ -45,11 +45,11 @@
                     <button id = "submit" type='submit' class="btn btn-primary btn-lg" style="margin-left: auto;"> Run </button>
                 </div>
                 <progress id="progress_bar" value="0" max="100"> </progress>
-                <p id="load">loading<span id="dots">.</span> time spent: <span id="time">0</span></p>
-
+                <p id="load">loading<span id="dots">.</span></p>
+                <p>time spent: <span id="time">0</span>s</p>
                 <div id ='resultBox' style="margin-left: auto; margin-right: auto;">
                     <p id='errorbox'></p>
-                    <img id="preload" src="#" alt="image preload" /><img id="result" src="">
+                    <img id="preload" src="#">  <img id="result" src="">
                 </div>
                 <script src="{{ url_for('static', filename='jquery-3.5.1.js') }}"></script>
                 <script src="{{ url_for('static', filename='request.js') }}"></script>

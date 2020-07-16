@@ -2,7 +2,6 @@ function check_progress(task_id, progress_bar) {
     var progress_bar = document.getElementById("progress_bar");
     var dots = document.getElementById("dots");
     var time_spent = document.getElementById("time");
-    document.getElementById("load").style.visibility = "visible";
     var timer;
     var temp = [".", "..", "..."];
     var time = 0;
@@ -13,6 +12,7 @@ function check_progress(task_id, progress_bar) {
           time_spent.innerHTML = time;
           dots.innerHTML = temp[time%3];
           if (parseInt(progress)>=100) {
+            dots.innerHTML = " complete";
             clearInterval(timer);
           }
       })
@@ -22,6 +22,8 @@ function check_progress(task_id, progress_bar) {
 document.getElementById("submit").onclick = () => {
     var formData = new FormData();
     var source = document.getElementById('source').files[0];
+    var submit = document.getElementById('submit');
+    submit.style.visibility = "hidden";
     //const { v4: uuidv4 } = require('uuid');
     //var user_id = uuidv4();
     var user_id = Math.floor(Math.random()*1000000000);
@@ -37,6 +39,7 @@ document.getElementById("submit").onclick = () => {
         }
     )
     .then(response => {
+        submit.style.visibility = "visible";
         if ( response.status == 200){
             return response
         }
