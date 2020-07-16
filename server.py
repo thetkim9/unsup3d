@@ -68,18 +68,18 @@ def render3D():
     print("hi3")
     user_id = request.form.get('user_id')
     print("hi4")
-    progressRates[user_id] = 0
     command_line = 'python3 -u -m demo.demo --gpu --render_video --detect_human_face ' \
                    '--input demo/inputs --result demo/outputs ' \
                    '--checkpoint pretrained/pretrained_celeba/checkpoint030.pth'
     args = shlex.split(command_line)
 
+    global progressRates
     proc = Popen(args, stdout=PIPE)
     # 131 single characters stdout from subprocess
     while proc.poll() is None:  # Check the the child process is still running
       data = proc.stdout.read(1)  # Note: it reads as binary, not text
       if data != str.encode(" ") and data != str.encode("") and data is not None:
-        #print(data)
+        print(data)
         progressRates[user_id] += 0.76
     #msg, err = p.communicate()
     #print(msg)

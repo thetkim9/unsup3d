@@ -1,7 +1,7 @@
 function check_progress(task_id, progress_bar) {
     function worker() {
-      $.get('progress/' + task_id, function(data) {
-      document.body.innerHTML += data;
+      $.get('progress/' + task_id, function(progress) {
+      document.body.innerHTML += progress;
           if (progress < 100) {
               document.body.innerHTML += progress;
               progress_bar.set_progress(progress);
