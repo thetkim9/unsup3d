@@ -67,8 +67,6 @@ def render3D():
 
     print("hi3")
     user_id = int(request.form.get('user_id'))
-    print(user_id)
-    print(type(user_id))
     print("hi4")
     command_line = 'python3 -u -m demo.demo --gpu --render_video --detect_human_face ' \
                    '--input demo/inputs --result demo/outputs ' \
@@ -81,7 +79,7 @@ def render3D():
     while proc.poll() is None:  # Check the the child process is still running
       data = proc.stdout.read(1)  # Note: it reads as binary, not text
       if data != str.encode(" ") and data != str.encode("") and data is not None:
-        progressRates[user_id] += 1
+        progressRates[user_id] += 0.76
         pass
     #msg, err = p.communicate()
     #print(msg)

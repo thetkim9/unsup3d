@@ -2,7 +2,8 @@ function check_progress(task_id, progress_bar) {
     function worker() {
       $.get('progress/' + task_id, function(progress) {
           document.body.innerHTML += progress;
-          document.getElementById("progress_bar").value = min(progress, 100);
+          print(type(progress))
+          document.getElementById("progress_bar").value = str(min(progress, 100));
           if (progress>=100) {
             clearInterval(worker);
           }
