@@ -66,13 +66,7 @@ def render3D():
     #exporting_threads[thread_id].start()
 
     print("hi3")
-    print(request.form)
-    print(request.args)
-    print(request.files)
-    print(request.values)
-    print(request.json)
     user_id = request.form.get('user_id')
-    print(user_id)
     print("hi4")
     progressRates[user_id] = 0
     command_line = 'python3 -u -m demo.demo --gpu --render_video --detect_human_face ' \
