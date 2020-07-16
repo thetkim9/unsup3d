@@ -1,13 +1,15 @@
 function check_progress(task_id, progress_bar) {
-  $("#progress_bar").hide();
+    function worker() {
+      alert("hi");
       $.get('progress/' + task_id, function(data) {
           alert(data);
           if (progress < 100) {
               document.body.innerHTML += progress;
               progress_bar.set_progress(progress);
-              setInterval(check_progress, 1000);
           }
       })
+    }
+    setInterval(worker, 1000);
 }
 document.getElementById("submit").onclick = () => {
     var formData = new FormData();
