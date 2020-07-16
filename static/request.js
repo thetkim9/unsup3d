@@ -1,13 +1,20 @@
 function check_progress(task_id, progress_bar) {
+    var progress_bar = document.getElementById("progress_bar");
+    var dots = document.getElementById("dots");
+    var timer;
+    var temp = [".", "..", "..."];
+    var time = 0;
     function worker() {
       $.get('progress/' + task_id, function(progress) {
-          document.getElementById("progress_bar").value = Math.min(parseInt(progress), 100).toString();
+          progress_bar.value = Math.min(parseInt(progress), 100).toString();
+          time += 1;
+          dots.innerHTML = temp[time%3];
           if (parseInt(progress)>=100) {
-            clearInterval(worker);
+            clearInterval(timer);
           }
       })
     }
-    setInterval(worker, 1000);
+    timer = setInterval(worker, 1000);
 }
 document.getElementById("submit").onclick = () => {
     var formData = new FormData();
