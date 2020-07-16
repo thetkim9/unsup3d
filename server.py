@@ -123,9 +123,9 @@ def progress(user_id):
 @app.route('/progress/<int:user_id>')
 def progress(user_id):
     global progressRates
-    if str(user_id) not in progressRates.keys():
+    if user_id not in progressRates.keys():
       print("start")
-      progressRates[str(user_id)] = 0
+      progressRates[user_id] = 0
     print(progressRates[user_id])
     return str(progressRates[user_id])
 
