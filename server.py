@@ -66,7 +66,7 @@ def render3D():
     #exporting_threads[thread_id].start()
 
     print("hi3")
-    user_id = request.form.get('user_id')
+    user_id = int(request.form.get('user_id'))
     print(user_id)
     print(type(user_id))
     print("hi4")
@@ -81,7 +81,6 @@ def render3D():
     while proc.poll() is None:  # Check the the child process is still running
       data = proc.stdout.read(1)  # Note: it reads as binary, not text
       if data != str.encode(" ") and data != str.encode("") and data is not None:
-        print(progressRates)
         progressRates[user_id] += 1
         pass
     #msg, err = p.communicate()
