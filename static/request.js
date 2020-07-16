@@ -1,6 +1,7 @@
 function check_progress(task_id, progress_bar) {
   $("#progress_bar").hide();
       $.get('progress/' + task_id, function(data) {
+          document.body.innerHTML += data;
           if (progress < 100) {
               document.body.innerHTML += progress;
               progress_bar.set_progress(progress);
