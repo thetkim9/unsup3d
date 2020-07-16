@@ -74,10 +74,10 @@ def render3D():
     args = shlex.split(command_line)
 
     global progressRates
-    proc = Popen(args, stdout=PIPE)
+    proc = Popen(args, stderr=PIPE)
     # 131 single characters stdout from subprocess
     while proc.poll() is None:  # Check the the child process is still running
-      data = proc.stdout.read(1)  # Note: it reads as binary, not text
+      data = proc.stderr.read(1)  # Note: it reads as binary, not text
       if data != str.encode(" ") and data != str.encode("") and data is not None:
         progressRates[user_id] += 0.77
         pass

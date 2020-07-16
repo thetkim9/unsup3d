@@ -5,7 +5,7 @@ import torch
 import torch.nn as nn
 from .utils import *
 import os
-#t
+import sys
 
 EPS = 1e-7
 
@@ -77,7 +77,8 @@ class Demo():
             self.renderer = Renderer(cfgs)
 
     def load_checkpoint(self):
-        print("Loading checkpoint from {self.checkpoint_path}")
+        sys.stderr.write("Loading checkpoint from {self.checkpoint_path}")
+
         cp = torch.load(self.checkpoint_path, map_location=self.device)
         self.netD.load_state_dict(cp['netD'])
         self.netA.load_state_dict(cp['netA'])
@@ -109,12 +110,12 @@ class Demo():
         return normal
 
     def detect_face(self, im):
-        print("Detecting face using MTCNN face detector")
+        sys.stderr.write("Detecting face using MTCNN face detector")
         try:
             bboxes, prob = self.face_detector.detect(im)
             w0, h0, w1, h1 = bboxes[0]
         except:
-            print("Could not detect faces in the image")
+            sys.stderr.write("Could not detect faces in the image")
             return None
 
         hc, wc = (h0+h1)/2, (w0+w1)/2
@@ -195,7 +196,7 @@ class Demo():
                 self.render_animation()
 
     def render_animation(self):
-        print("Rendering video animations")
+        sys.stderr.write("Rendering video animations")
         b, h, w = self.canon_depth.shape
 
         ## morph from target view to canonical
@@ -246,6 +247,7 @@ class Demo():
         self.texture_animation = rearrange_frames(texture_animation)
 
     def save_results(self, save_dir):
+        '''
         print("Saving results to {save_dir}")
         save_image(save_dir, self.input_im[0]/2+0.5, 'input_image')
         save_image(save_dir, self.depth_inv_rescaler(self.canon_depth)[0].repeat(3,1,1), 'canonical_depth')
@@ -263,8 +265,9 @@ class Demo():
             save_video(save_dir, self.shape_animation[0], 'shape_animation')
             save_video(save_dir, self.normal_animation[0], 'normal_animation')
             save_video(save_dir, self.texture_animation[0], 'texture_animation')
+        '''
 
-
+        pass
 if __name__ == "__main__":
     #print("demo0")
     parser = argparse.ArgumentParser(description='Demo configurations.')
