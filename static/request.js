@@ -2,6 +2,7 @@ document.body.onload = function() {
     document.getElementById("preload").style.visibility = "hidden";
     if (timer!=null)
         clearInterval(timer);
+    $.get('stopsubp/' + user_id);
 }
 var timer;
 function check_progress(task_id, progress_bar) {
@@ -26,6 +27,7 @@ function check_progress(task_id, progress_bar) {
 }
 
 document.getElementById("submit").onclick = () => {
+    document.getElementById("result").src = "";
     var formData = new FormData();
     var source = document.getElementById('source').files[0];
     var submit = document.getElementById('submit');

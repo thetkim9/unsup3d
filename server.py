@@ -32,6 +32,7 @@ class RenderingThread(threading.Thread):
 
 #exporting_threads = {}
 progressRates = {}
+subProcesses = {}
 
 app = Flask(__name__, static_url_path="", template_folder="./")
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 8
@@ -77,15 +78,17 @@ def render3D():
     args = shlex.split(command_line)
 
     proc = Popen(args, stdout=PIPE, stderr=PIPE)
+    global subProcesses
+    subProcesses[user_id] = proc
     # 127 single characters stdout from subprocess
     count = 0
     while proc.poll() is None:  # Check the the child process is still running
       data = proc.stderr.read(1)  # Note: it reads as binary, not text
       if data != str.encode(" ") and data != str.encode("") and data is not None:
-        print(user_id, progressRates[user_id], data, count)
+        #print(user_id, progressRates[user_id], data, count)
         progressRates[user_id] += 0.6
         pass
-    print(user_id, count)
+    #print(user_id, count)
     #msg, err = p.communicate()
     #print(msg)
     #print(err)
@@ -114,13 +117,6 @@ def render3D():
   except Exception:
     return {'error': 'cannot load your image files. check your image files'}, 403
 
-'''
-@app.route('/progress/<int:user_id>')
-def progress(user_id):
-    global exporting_threads
-
-    return str(exporting_threads[user_id].progress)
-'''
 @app.route('/setup/<int:user_id>')
 def setup(user_id):
     global progressRates
@@ -139,6 +135,12 @@ def remove(user_id):
     path = os.path.join("demo/outputs", str(user_id))
     shutil.rmtree(path)
     progressRates[user_id] = 100
+    return "0"
+
+@app.route('/stopsubp/<int:user_id>')
+def stopsubp(user_id):
+    global subProcesses
+    subProcesses[user_id].terminate()
     return "0"
 
 @app.errorhandler(413)
