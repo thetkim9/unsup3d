@@ -114,7 +114,7 @@ def render3D():
     path = os.path.join("demo/outputs", str(user_id))
     shutil.rmtree(path)
     '''
-    path = os.path.join("demo/inputs", str(user_id) + "." + human_face.format.lower())
+    path = os.path.join("demo/inputs/"+str(user_id), str(user_id) + "." + human_face.format.lower())
     print(path)
     print(str(path))
     os.remove(path)
