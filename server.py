@@ -10,7 +10,7 @@ import shutil
 import os
 
 '''
-class ExportingThread(threading.Thread):
+class RenderingThread(threading.Thread):
   def __init__(self):
     self.progress = 0
     super().__init__()
@@ -68,7 +68,7 @@ def render3D():
     #global exporting_threads
 
     #thread_id = request.form['user_id']
-    #exporting_threads[thread_id] = ExportingThread()
+    #exporting_threads[user_id] = RenderingThread()
     #exporting_threads[thread_id].start()
     print("hi3")
     command_line = 'python3 -u -m demo.demo --gpu --render_video --detect_human_face ' \

@@ -1,8 +1,13 @@
+document.body.onload = function() {
+    document.getElementById("preload").style.visibility = "hidden";
+    if (timer!=null)
+        clearInterval(timer);
+}
+var timer;
 function check_progress(task_id, progress_bar) {
     var progress_bar = document.getElementById("progress_bar");
     var dots = document.getElementById("dots");
     var time_spent = document.getElementById("time");
-    var timer;
     var temp = [".", "..", "..."];
     var time = 0;
     function worker() {
@@ -41,7 +46,6 @@ document.getElementById("submit").onclick = () => {
         }
     )
     .then(response => {
-        submit.style.visibility = "visible";
         if ( response.status == 200){
             return response
         }
@@ -56,6 +60,7 @@ document.getElementById("submit").onclick = () => {
         document.getElementById("result").src = imageURL;
         document.getElementById("errorbox").innerHTML = "";
         $.get('remove/' + user_id);
+        submit.style.visibility = "visible";
     })
     .catch(e =>{
         document.getElementById("errorbox").innerHTML = e;
