@@ -140,7 +140,8 @@ def remove(user_id):
 @app.route('/stopsubp/<int:user_id>')
 def stopsubp(user_id):
     global subProcesses
-    subProcesses[user_id].terminate()
+    if user_id in subProcesses.keys():
+      subProcesses[user_id].terminate()
     return "0"
 
 @app.errorhandler(413)
