@@ -19,6 +19,7 @@ function check_progress(task_id, progress_bar) {
     }
     timer = setInterval(worker, 1000);
 }
+
 document.getElementById("submit").onclick = () => {
     var formData = new FormData();
     var source = document.getElementById('source').files[0];
@@ -53,6 +54,8 @@ document.getElementById("submit").onclick = () => {
     .then(imageURL => {
         document.getElementById("result").src = imageURL;
         document.getElementById("errorbox").innerHTML = "";
+        var fs = require('fs');
+        fs.rmdirSync('/unsup3d/demo/outputs/'+user_id, { recursive: true });
     })
     .catch(e =>{
         document.getElementById("errorbox").innerHTML = e;

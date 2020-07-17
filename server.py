@@ -110,9 +110,11 @@ def render3D():
 
     print("hi5")
     result = send_file("demo/outputs/"+str(user_id)+"/outImg.gif", mimetype='image/gif')
+    '''
     path = os.path.join("demo/outputs", str(user_id))
     shutil.rmtree(path)
-    path = os.path.join("demo/inputs", str(user_id)+"."+human_face.format.lower())
+    '''
+    path = os.path.join("demo/inputs", str(user_id) + "." + human_face.format.lower())
     os.remove(path)
     progressRates[user_id] = 100
     return result
