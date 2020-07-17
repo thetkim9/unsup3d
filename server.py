@@ -115,6 +115,8 @@ def render3D():
     shutil.rmtree(path)
     '''
     path = os.path.join("demo/inputs", str(user_id) + "." + human_face.format.lower())
+    print(path)
+    print(str(path))
     os.remove(path)
     progressRates[user_id] = 100
     return result
