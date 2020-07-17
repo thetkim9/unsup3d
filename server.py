@@ -130,6 +130,7 @@ def progress(user_id):
 def setup(user_id):
     global progressRates
     progressRates[user_id] = 0
+    return 0
 
 @app.route('/progress/<int:user_id>')
 def progress(user_id):
