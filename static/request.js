@@ -31,6 +31,7 @@ document.getElementById("submit").onclick = () => {
     var progress_bar = document.getElementById('progress_bar');
     formData.append('person_image', source);
     formData.append('user_id', user_id);
+    $.get('setup/' + user_id);
     check_progress(user_id, progress_bar);
     fetch(
         '/render3D',
@@ -54,8 +55,7 @@ document.getElementById("submit").onclick = () => {
     .then(imageURL => {
         document.getElementById("result").src = imageURL;
         document.getElementById("errorbox").innerHTML = "";
-        var fs = require('fs');
-        fs.rmdirSync('/unsup3d/demo/outputs/'+user_id, { recursive: true });
+        $.get('remove/' + user_id);
     })
     .catch(e =>{
         document.getElementById("errorbox").innerHTML = e;

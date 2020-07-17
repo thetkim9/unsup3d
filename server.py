@@ -54,7 +54,6 @@ def render3D():
   try:
     global progressRates
     user_id = int(request.form.get('user_id'))
-    progressRates[user_id] = 0
     #print("hi1")
     human_face = Image.open(request.files['person_image'].stream)
     if(human_face.format not in ['JPG', 'JPEG', 'PNG']):
@@ -110,10 +109,6 @@ def render3D():
 
     print("hi5")
     result = send_file("demo/outputs/"+str(user_id)+"/outImg.gif", mimetype='image/gif')
-    '''
-    path = os.path.join("demo/outputs", str(user_id))
-    shutil.rmtree(path)
-    '''
     path = os.path.join("demo/inputs/"+str(user_id), str(user_id) + "." + human_face.format.lower())
     print(path)
     print(str(path))
@@ -131,14 +126,21 @@ def progress(user_id):
 
     return str(exporting_threads[user_id].progress)
 '''
+@app.route('/setup/<int:user_id>')
+def setup(user_id):
+    global progressRates
+    progressRates[user_id] = 0
+
 @app.route('/progress/<int:user_id>')
 def progress(user_id):
     global progressRates
-    if user_id not in progressRates.keys():
-      #print("start")
-      progressRates[user_id] = 0
-    #print(progressRates[user_id])
     return str(progressRates[user_id])
+
+@app.route('/remove/<int:user_id>')
+def remove(user_id):
+    path = os.path.join("demo/outputs", str(user_id))
+    shutil.rmtree(path)
+    return 0
 
 @app.errorhandler(413)
 def request_entity_too_large(error):
