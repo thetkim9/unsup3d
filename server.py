@@ -130,7 +130,7 @@ def progress(user_id):
 def setup(user_id):
     global progressRates
     progressRates[user_id] = 0
-    return 0
+    return "0"
 
 @app.route('/progress/<int:user_id>')
 def progress(user_id):
@@ -141,7 +141,7 @@ def progress(user_id):
 def remove(user_id):
     path = os.path.join("demo/outputs", str(user_id))
     shutil.rmtree(path)
-    return 0
+    return "0"
 
 @app.errorhandler(413)
 def request_entity_too_large(error):
