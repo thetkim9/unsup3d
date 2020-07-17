@@ -33,6 +33,7 @@ class RenderingThread(threading.Thread):
 #exporting_threads = {}
 progressRates = {}
 subProcesses = {}
+terminated = {}
 
 app = Flask(__name__, static_url_path="", template_folder="./")
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 8
@@ -55,6 +56,8 @@ def render3D():
   try:
     global progressRates
     user_id = int(request.form.get('user_id'))
+    global terminated
+    terminated[user_id] = False
     #print("hi1")
     human_face = Image.open(request.files['person_image'].stream)
     if(human_face.format not in ['JPG', 'JPEG', 'PNG']):
@@ -72,22 +75,23 @@ def render3D():
     #exporting_threads[user_id] = RenderingThread()
     #exporting_threads[thread_id].start()
     #print("hi3")
-    command_line = 'python3 -u -m demo.demo --gpu --render_video --detect_human_face ' \
-                   '--input demo/inputs/'+str(user_id)+' --result demo/outputs ' \
-                   '--checkpoint pretrained/pretrained_celeba/checkpoint030.pth'
-    args = shlex.split(command_line)
+    if terminated[user_id]:
+      command_line = 'python3 -u -m demo.demo --gpu --render_video --detect_human_face ' \
+                     '--input demo/inputs/'+str(user_id)+' --result demo/outputs ' \
+                     '--checkpoint pretrained/pretrained_celeba/checkpoint030.pth'
+      args = shlex.split(command_line)
+      proc = Popen(args, stdout=PIPE, stderr=PIPE)
+      global subProcesses
+      subProcesses[user_id] = proc
+      # 127 single characters stdout from subprocess
+      count = 0
+      while proc.poll() is None:  # Check the the child process is still running
+        data = proc.stderr.read(1)  # Note: it reads as binary, not text
+        if data != str.encode(" ") and data != str.encode("") and data is not None:
+          #print(user_id, progressRates[user_id], data, count)
+          progressRates[user_id] += 0.6
+          pass
 
-    proc = Popen(args, stdout=PIPE, stderr=PIPE)
-    global subProcesses
-    subProcesses[user_id] = proc
-    # 127 single characters stdout from subprocess
-    count = 0
-    while proc.poll() is None:  # Check the the child process is still running
-      data = proc.stderr.read(1)  # Note: it reads as binary, not text
-      if data != str.encode(" ") and data != str.encode("") and data is not None:
-        #print(user_id, progressRates[user_id], data, count)
-        progressRates[user_id] += 0.6
-        pass
     #print(user_id, count)
     #msg, err = p.communicate()
     #print(msg)
@@ -140,6 +144,7 @@ def remove(user_id):
 @app.route('/stopsubp/<int:user_id>')
 def stopsubp(user_id):
     global subProcesses
+    terminated[user_id] = True
     if user_id in subProcesses.keys():
       subProcesses[user_id].terminate()
     return "0"
