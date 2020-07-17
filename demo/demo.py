@@ -77,12 +77,15 @@ class Demo():
             self.renderer = Renderer(cfgs)
 
     def load_checkpoint(self):
-        sys.stderr.write("Loading checkpoint from {self.checkpoint_path}")
+        sys.stderr.write("Loading")
 
         cp = torch.load(self.checkpoint_path, map_location=self.device)
         self.netD.load_state_dict(cp['netD'])
+        sys.stderr.write(" checkpoint ")
         self.netA.load_state_dict(cp['netA'])
+        sys.stderr.write("from ")
         self.netL.load_state_dict(cp['netL'])
+        sys.stderr.write("{self.checkpoint_path}")
         self.netV.load_state_dict(cp['netV'])
 
     def depth_to_3d_grid(self, depth, inv_K=None):
@@ -196,7 +199,7 @@ class Demo():
                 self.render_animation()
 
     def render_animation(self):
-        sys.stderr.write("Rendering video animations")
+        sys.stderr.write("Rendering")
         b, h, w = self.canon_depth.shape
 
         ## morph from target view to canonical
@@ -230,6 +233,9 @@ class Demo():
             ], 1)
             return out_seq
 
+        sys.stderr.write(" video ")
+
+        '''
         ## textureless shape
         front_light = torch.FloatTensor([0,0,1]).to(self.canon_depth.device)
         canon_shape_im = (self.canon_normal * front_light.view(1,1,1,3)).sum(3).clamp(min=0).unsqueeze(1)
@@ -241,14 +247,16 @@ class Demo():
         canon_normal_im = self.canon_normal.permute(0,3,1,2) /2+0.5
         normal_animation = self.renderer.render_yaw(canon_normal_im, self.canon_depth, v_after=view_after, rotations=yaw_rotations)  # BxTxCxHxW
         self.normal_animation = rearrange_frames(normal_animation)
+        '''
 
         ## textured
         texture_animation = self.renderer.render_yaw(self.canon_im /2+0.5, self.canon_depth, v_after=view_after, rotations=yaw_rotations)  # BxTxCxHxW
         self.texture_animation = rearrange_frames(texture_animation)
+        sys.stderr.write("animations")
 
     def save_results(self, save_dir):
+        sys.stderr.write("Saving results to {save_dir}")
         '''
-        print("Saving results to {save_dir}")
         save_image(save_dir, self.input_im[0]/2+0.5, 'input_image')
         save_image(save_dir, self.depth_inv_rescaler(self.canon_depth)[0].repeat(3,1,1), 'canonical_depth')
         save_image(save_dir, self.canon_normal[0].permute(2,0,1)/2+0.5, 'canonical_normal')
@@ -260,12 +268,11 @@ class Demo():
             f.write(self.mtls[0].replace('$TXTFILE', './canonical_image.png'))
         with open(os.path.join(save_dir, 'result.obj'), "w") as f:
             f.write(self.objs[0].replace('$MTLFILE', './result.mtl'))
-
-        if self.render_video:
-            save_video(save_dir, self.shape_animation[0], 'shape_animation')
-            save_video(save_dir, self.normal_animation[0], 'normal_animation')
-            save_video(save_dir, self.texture_animation[0], 'texture_animation')
         '''
+        if self.render_video:
+            #save_video(save_dir, self.shape_animation[0], 'shape_animation')
+            #save_video(save_dir, self.normal_animation[0], 'normal_animation')
+            save_video(save_dir, self.texture_animation[0], 'texture_animation')
 
         pass
 if __name__ == "__main__":

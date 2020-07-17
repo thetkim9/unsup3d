@@ -4,8 +4,9 @@ from PIL import Image, ImageOps
 from subprocess import Popen, PIPE
 import shlex
 from moviepy.editor import *
-import threading
-import time
+#import threading
+#import time
+import os
 
 '''
 class ExportingThread(threading.Thread):
@@ -50,13 +51,14 @@ def render3D():
     return {'error': 'must have a image of human face'}, 400
 
   try:
-    print("hi1")
+    user_id = int(request.form.get('user_id'))
+    #print("hi1")
     human_face = Image.open(request.files['person_image'].stream)
     if(human_face.format not in ['JPG', 'JPEG', 'PNG']):
       return {'error': 'image must be jpg, jpeg or png'}, 401
 
-    print("hi2")
-    dir1 = "demo/inputs/inImg."+human_face.format.lower()
+    #print("hi2")
+    dir1 = "demo/inputs/"+user_id+"."+human_face.format.lower()
     human_face.save(dir1)
 
     #global exporting_threads
@@ -65,32 +67,33 @@ def render3D():
     #exporting_threads[thread_id] = ExportingThread()
     #exporting_threads[thread_id].start()
 
-    print("hi3")
-    user_id = int(request.form.get('user_id'))
-    print("hi4")
+    #print("hi3")
     command_line = 'python3 -u -m demo.demo --gpu --render_video --detect_human_face ' \
                    '--input demo/inputs --result demo/outputs ' \
                    '--checkpoint pretrained/pretrained_celeba/checkpoint030.pth'
     args = shlex.split(command_line)
 
     global progressRates
-    proc = Popen(args, stderr=PIPE)
+    proc = Popen(args, stdout=PIPE, stderr=PIPE)
     # 131 single characters stdout from subprocess
+    count = 0
     while proc.poll() is None:  # Check the the child process is still running
       data = proc.stderr.read(1)  # Note: it reads as binary, not text
       if data != str.encode(" ") and data != str.encode("") and data is not None:
+        count += 1
         progressRates[user_id] += 0.77
         pass
+    print("count:", count)
     #msg, err = p.communicate()
     #print(msg)
     #print(err)
 
-    print("hi4.5")
+    #print("hi4.5")
     '''
     if msg!=None and len(msg)>0:
         return {'error': 'face not properly recognized. choose a photo with an upfront person.'}, 402
     '''
-    print("hi5")
+    #print("hi5")
     '''
     print(os.path.exists("demo/outputs/inImg/texture_animation.mp4"))
     for path, subdirs, files in os.walk("demo"):
@@ -100,13 +103,12 @@ def render3D():
       for name in files:
         print(os.path.join(path, name))
     '''
-    clip = (VideoFileClip("demo/outputs/inImg/texture_animation.mp4"))
-    print("hi5.5")
-    clip.write_gif("demo/outputs/outImg.gif")
+    clip = (VideoFileClip("demo/outputs/"+user_id+"/texture_animation.mp4"))
+    #print("hi5.5")
+    clip.write_gif("demo/outputs/"+user_id+".gif")
 
-    print("hi6.0")
-    result = send_file("demo/outputs/outImg.gif", mimetype='image/gif')
-
+    #print("hi6.0")
+    result = send_file("demo/outputs/"+user_id+".gif", mimetype='image/gif')
     return result
 
   except Exception:
