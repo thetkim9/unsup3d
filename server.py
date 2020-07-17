@@ -6,6 +6,7 @@ import shlex
 from moviepy.editor import *
 #import threading
 #import time
+import shutil
 import os
 
 '''
@@ -51,16 +52,18 @@ def render3D():
     return {'error': 'must have a image of human face'}, 400
 
   try:
+    global progressRates
     user_id = int(request.form.get('user_id'))
-    print("hi1")
+    progressRates[user_id] = 0
+    #print("hi1")
     human_face = Image.open(request.files['person_image'].stream)
     if(human_face.format not in ['JPG', 'JPEG', 'PNG']):
       return {'error': 'image must be jpg, jpeg or png'}, 401
 
-    print("hi2")
+    #print("hi2")
     dir1 = "demo/inputs/"+str(user_id)+"."+human_face.format.lower()
     human_face.save(dir1)
-
+    progressRates[user_id] = 5
     #global exporting_threads
 
     #thread_id = request.form['user_id']
@@ -73,13 +76,12 @@ def render3D():
                    '--checkpoint pretrained/pretrained_celeba/checkpoint030.pth'
     args = shlex.split(command_line)
 
-    global progressRates
     proc = Popen(args, stdout=PIPE, stderr=PIPE)
     # 127 single characters stdout from subprocess
     while proc.poll() is None:  # Check the the child process is still running
       data = proc.stderr.read(1)  # Note: it reads as binary, not text
       if data != str.encode(" ") and data != str.encode("") and data is not None:
-        progressRates[user_id] += 0.67
+        progressRates[user_id] += 0.6
         pass
     #msg, err = p.communicate()
     #print(msg)
@@ -100,12 +102,13 @@ def render3D():
         print(os.path.join(path, name))
     '''
     clip = (VideoFileClip("demo/outputs/"+str(user_id)+"/texture_animation.mp4"))
-    print("hi5")
-    clip.write_gif("demo/outputs/"+str(user_id)+".gif")
+    clip.write_gif("demo/outputs/"+str(user_id)+"/outImg.gif")
 
-    print("hi6.0")
-    result = send_file("demo/outputs/"+str(user_id)+".gif", mimetype='image/gif')
+    print("hi5")
     progressRates[user_id] = 100
+    result = send_file("demo/outputs/"+str(user_id)+"/outImg.gif", mimetype='image/gif')
+    path = os.path.join("demo/outputs", str(user_id))
+    shutil.rmtree(path)
     return result
 
   except Exception:
