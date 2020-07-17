@@ -47,7 +47,7 @@ def render3D():
   if request.method != "POST":
     return
 
-  print("hi0")
+  #print("hi0")
   if not request.files.get('person_image'):
     return {'error': 'must have a image of human face'}, 400
 
@@ -70,7 +70,7 @@ def render3D():
     #thread_id = request.form['user_id']
     #exporting_threads[user_id] = RenderingThread()
     #exporting_threads[thread_id].start()
-    print("hi3")
+    #print("hi3")
     command_line = 'python3 -u -m demo.demo --gpu --render_video --detect_human_face ' \
                    '--input demo/inputs/'+str(user_id)+' --result demo/outputs ' \
                    '--checkpoint pretrained/pretrained_celeba/checkpoint030.pth'
@@ -90,7 +90,7 @@ def render3D():
     #print(msg)
     #print(err)
 
-    print("hi4")
+    #print("hi4")
     '''
     if msg!=None and len(msg)>0:
         return {'error': 'face not properly recognized. choose a photo with an upfront person.'}, 402
@@ -107,7 +107,7 @@ def render3D():
     clip = (VideoFileClip("demo/outputs/"+str(user_id)+"/texture_animation.mp4"))
     clip.write_gif("demo/outputs/"+str(user_id)+"/outImg.gif")
 
-    print("hi5")
+    #print("hi5")
     result = send_file("demo/outputs/"+str(user_id)+"/outImg.gif", mimetype='image/gif')
     return result
 
