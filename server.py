@@ -58,7 +58,7 @@ def render3D():
       return {'error': 'image must be jpg, jpeg or png'}, 401
 
     print("hi2")
-    dir1 = "demo/inputs/"+user_id+"."+human_face.format.lower()
+    dir1 = "demo/inputs/"+str(user_id)+"."+human_face.format.lower()
     human_face.save(dir1)
 
     #global exporting_threads
@@ -103,14 +103,14 @@ def render3D():
       for name in files:
         print(os.path.join(path, name))
     '''
-    clip = (VideoFileClip("demo/outputs/"+user_id+"/texture_animation.mp4"))
+    clip = (VideoFileClip("demo/outputs/"+str(user_id)+"/texture_animation.mp4"))
     progressRates[user_id] += 1
     print("hi5.5")
-    clip.write_gif("demo/outputs/"+user_id+".gif")
+    clip.write_gif("demo/outputs/"+str(user_id)+".gif")
     progressRates[user_id] += 8
 
     print("hi6.0")
-    result = send_file("demo/outputs/"+user_id+".gif", mimetype='image/gif')
+    result = send_file("demo/outputs/"+str(user_id)+".gif", mimetype='image/gif')
     progressRates[user_id] += 1
     return result
 
