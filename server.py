@@ -63,16 +63,17 @@ def render3D():
     #print("hi2")
     dir1 = "demo/inputs/"+str(user_id)+"."+human_face.format.lower()
     human_face.save(dir1)
+    path = os.path.join("demo/inputs", str(user_id))
+    os.mkdir(path)
     progressRates[user_id] = 1
     #global exporting_threads
 
     #thread_id = request.form['user_id']
     #exporting_threads[thread_id] = ExportingThread()
     #exporting_threads[thread_id].start()
-
     print("hi3")
     command_line = 'python3 -u -m demo.demo --gpu --render_video --detect_human_face ' \
-                   '--input demo/inputs --result demo/outputs ' \
+                   '--input demo/inputs/'+str(user_id)+' --result demo/outputs ' \
                    '--checkpoint pretrained/pretrained_celeba/checkpoint030.pth'
     args = shlex.split(command_line)
 
@@ -111,6 +112,8 @@ def render3D():
     result = send_file("demo/outputs/"+str(user_id)+"/outImg.gif", mimetype='image/gif')
     path = os.path.join("demo/outputs", str(user_id))
     shutil.rmtree(path)
+    path = os.path.join("demo/inputs", str(user_id)+"."+human_face.format.lower())
+    os.remove(path)
     progressRates[user_id] = 100
     return result
 
