@@ -63,7 +63,7 @@ def render3D():
     #print("hi2")
     dir1 = "demo/inputs/"+str(user_id)+"."+human_face.format.lower()
     human_face.save(dir1)
-    progressRates[user_id] = 5
+    progressRates[user_id] = 1
     #global exporting_threads
 
     #thread_id = request.form['user_id']
@@ -81,7 +81,7 @@ def render3D():
     while proc.poll() is None:  # Check the the child process is still running
       data = proc.stderr.read(1)  # Note: it reads as binary, not text
       if data != str.encode(" ") and data != str.encode("") and data is not None:
-        print(user_id, progressRates[user_id])
+        print(user_id, progressRates[user_id], data)
         progressRates[user_id] += 0.6
         pass
     #msg, err = p.communicate()
