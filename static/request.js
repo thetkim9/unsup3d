@@ -8,7 +8,7 @@ function check_progress(task_id, progress_bar) {
     function worker() {
       $.get('progress/' + task_id, function(progress) {
           progress_bar.value = Math.min(parseInt(progress), 100).toString();
-          time += 1;
+          time += 1.5;
           time_spent.innerHTML = time;
           dots.innerHTML = temp[time%3];
           if (parseInt(progress)>=100) {
@@ -17,7 +17,7 @@ function check_progress(task_id, progress_bar) {
           }
       })
     }
-    timer = setInterval(worker, 1500);
+    timer = setInterval(worker, 1000);
 }
 document.getElementById("submit").onclick = () => {
     var formData = new FormData();

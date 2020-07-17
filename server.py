@@ -81,6 +81,7 @@ def render3D():
     while proc.poll() is None:  # Check the the child process is still running
       data = proc.stderr.read(1)  # Note: it reads as binary, not text
       if data != str.encode(" ") and data != str.encode("") and data is not None:
+        print(user_id, progressRates[user_id])
         progressRates[user_id] += 0.6
         pass
     #msg, err = p.communicate()
@@ -105,10 +106,10 @@ def render3D():
     clip.write_gif("demo/outputs/"+str(user_id)+"/outImg.gif")
 
     print("hi5")
-    progressRates[user_id] = 100
     result = send_file("demo/outputs/"+str(user_id)+"/outImg.gif", mimetype='image/gif')
     path = os.path.join("demo/outputs", str(user_id))
     shutil.rmtree(path)
+    progressRates[user_id] = 100
     return result
 
   except Exception:
