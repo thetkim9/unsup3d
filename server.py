@@ -75,15 +75,12 @@ def render3D():
 
     global progressRates
     proc = Popen(args, stdout=PIPE, stderr=PIPE)
-    # 131 single characters stdout from subprocess
-    count = 0
+    # 127 single characters stdout from subprocess
     while proc.poll() is None:  # Check the the child process is still running
       data = proc.stderr.read(1)  # Note: it reads as binary, not text
       if data != str.encode(" ") and data != str.encode("") and data is not None:
-        count += 1
         progressRates[user_id] += 0.77
         pass
-    print("count:", count)
     #msg, err = p.communicate()
     #print(msg)
     #print(err)
