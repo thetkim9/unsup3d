@@ -75,7 +75,7 @@ def render3D():
     #exporting_threads[user_id] = RenderingThread()
     #exporting_threads[thread_id].start()
     #print("hi3")
-    if terminated[user_id]:
+    if not terminated[user_id]:
       command_line = 'python3 -u -m demo.demo --gpu --render_video --detect_human_face ' \
                      '--input demo/inputs/'+str(user_id)+' --result demo/outputs ' \
                      '--checkpoint pretrained/pretrained_celeba/checkpoint030.pth'
