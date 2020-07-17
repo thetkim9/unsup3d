@@ -52,12 +52,12 @@ def render3D():
 
   try:
     user_id = int(request.form.get('user_id'))
-    #print("hi1")
+    print("hi1")
     human_face = Image.open(request.files['person_image'].stream)
     if(human_face.format not in ['JPG', 'JPEG', 'PNG']):
       return {'error': 'image must be jpg, jpeg or png'}, 401
 
-    #print("hi2")
+    print("hi2")
     dir1 = "demo/inputs/"+user_id+"."+human_face.format.lower()
     human_face.save(dir1)
 
@@ -67,7 +67,7 @@ def render3D():
     #exporting_threads[thread_id] = ExportingThread()
     #exporting_threads[thread_id].start()
 
-    #print("hi3")
+    print("hi3")
     command_line = 'python3 -u -m demo.demo --gpu --render_video --detect_human_face ' \
                    '--input demo/inputs --result demo/outputs ' \
                    '--checkpoint pretrained/pretrained_celeba/checkpoint030.pth'
@@ -88,12 +88,12 @@ def render3D():
     #print(msg)
     #print(err)
 
-    #print("hi4.5")
+    print("hi4")
     '''
     if msg!=None and len(msg)>0:
         return {'error': 'face not properly recognized. choose a photo with an upfront person.'}, 402
     '''
-    #print("hi5")
+    print("hi5")
     '''
     print(os.path.exists("demo/outputs/inImg/texture_animation.mp4"))
     for path, subdirs, files in os.walk("demo"):
@@ -104,11 +104,14 @@ def render3D():
         print(os.path.join(path, name))
     '''
     clip = (VideoFileClip("demo/outputs/"+user_id+"/texture_animation.mp4"))
-    #print("hi5.5")
+    progressRates[user_id] += 1
+    print("hi5.5")
     clip.write_gif("demo/outputs/"+user_id+".gif")
+    progressRates[user_id] += 8
 
-    #print("hi6.0")
+    print("hi6.0")
     result = send_file("demo/outputs/"+user_id+".gif", mimetype='image/gif')
+    progressRates[user_id] += 1
     return result
 
   except Exception:
