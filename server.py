@@ -79,7 +79,7 @@ def render3D():
     while proc.poll() is None:  # Check the the child process is still running
       data = proc.stderr.read(1)  # Note: it reads as binary, not text
       if data != str.encode(" ") and data != str.encode("") and data is not None:
-        progressRates[user_id] += 0.77
+        progressRates[user_id] += 0.67
         pass
     #msg, err = p.communicate()
     #print(msg)
@@ -90,7 +90,6 @@ def render3D():
     if msg!=None and len(msg)>0:
         return {'error': 'face not properly recognized. choose a photo with an upfront person.'}, 402
     '''
-    print("hi5")
     '''
     print(os.path.exists("demo/outputs/inImg/texture_animation.mp4"))
     for path, subdirs, files in os.walk("demo"):
@@ -101,14 +100,12 @@ def render3D():
         print(os.path.join(path, name))
     '''
     clip = (VideoFileClip("demo/outputs/"+str(user_id)+"/texture_animation.mp4"))
-    progressRates[user_id] += 1
-    print("hi5.5")
+    print("hi5")
     clip.write_gif("demo/outputs/"+str(user_id)+".gif")
-    progressRates[user_id] += 8
 
     print("hi6.0")
     result = send_file("demo/outputs/"+str(user_id)+".gif", mimetype='image/gif')
-    progressRates[user_id] += 1
+    progressRates[user_id] = 100
     return result
 
   except Exception:
