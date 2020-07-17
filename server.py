@@ -61,10 +61,10 @@ def render3D():
       return {'error': 'image must be jpg, jpeg or png'}, 401
 
     #print("hi2")
-    dir1 = "demo/inputs/"+str(user_id)+"."+human_face.format.lower()
-    human_face.save(dir1)
     path = os.path.join("demo/inputs", str(user_id))
     os.mkdir(path)
+    dir1 = "demo/inputs/"+str(user_id)+"/"+str(user_id)+"."+human_face.format.lower()
+    human_face.save(dir1)
     progressRates[user_id] = 1
     #global exporting_threads
 
