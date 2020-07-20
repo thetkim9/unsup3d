@@ -1,4 +1,4 @@
-Try running this state-of-the-art ML model in Ainize!
+Try running this state-of-the-art ML model!
 
 [![Run on Ainize](https://ainize.ai/static/images/run_on_ainize_button.svg)](https://ainize.web.app/redirect?git_repo=github.com/thetkim9/unsup3d)
 
