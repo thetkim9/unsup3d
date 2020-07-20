@@ -9,28 +9,6 @@ from moviepy.editor import *
 import shutil
 import os
 
-'''
-class RenderingThread(threading.Thread):
-  def __init__(self):
-    self.progress = 0
-    super().__init__()
-
-  def run(self):
-    command_line = 'python3 -u -m demo.demo --gpu --render_video --detect_human_face ' \
-                   '--input demo/inputs --result demo/outputs ' \
-                   '--checkpoint pretrained/pretrained_celeba/checkpoint030.pth'
-    args = shlex.split(command_line)
-
-    proc = Popen(args, stdout=PIPE)
-    # 131 single characters stdout from subprocess
-    while proc.poll() is None:  # Check the the child process is still running
-      data = proc.stdout.read(1)  # Note: it reads as binary, not text
-      if data != str.encode(" ") and data != str.encode("") and data is not None:
-        #print(data)
-        self.progress += 0.76
-'''
-
-#exporting_threads = {}
 progressRates = {}
 subProcesses = {}
 terminated = {}
@@ -69,12 +47,7 @@ def render3D():
     dir1 = "demo/inputs/"+str(user_id)+"/"+str(user_id)+"."+human_face.format.lower()
     human_face.save(dir1)
     progressRates[user_id] = 1
-    #global exporting_threads
 
-    #thread_id = request.form['user_id']
-    #exporting_threads[user_id] = RenderingThread()
-    #exporting_threads[thread_id].start()
-    #print("hi3")
     if not terminated[user_id]:
       command_line = 'python3 -u -m demo.demo --input demo/inputs/'+str(user_id)+' --result demo/outputs '
       args = shlex.split(command_line)
@@ -99,6 +72,12 @@ def render3D():
 
   except Exception:
     return {'error': 'cannot load your image files. check your image files'}, 403
+
+
+@app.teardown_request
+def show_teardown(exception):
+    print(request.path, 'after with block', str(exception))
+
 
 @app.route('/setup/<int:user_id>')
 def setup(user_id):
