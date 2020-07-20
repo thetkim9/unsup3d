@@ -50,8 +50,8 @@
                 <p>time spent: <span id="time">0</span>s</p>
                 <div id ='resultBox' style="margin-left: auto; margin-right: auto;">
                     <p id='errorbox'></p>
-                    <img id="preload" src="{{ url_for('sample', filename='sampleIn.png') }}">
-                    <img id="result" src="{{ url_for('sample', filename='sampleOut.gif') }}">
+                    <img id="preload" src="{{ url_for('static', filename='sampleIn.png') }}">
+                    <img id="result" src="{{ url_for('static', filename='sampleOut.gif') }}">
                 </div>
                 <script src="{{ url_for('static', filename='jquery-3.5.1.js') }}"></script>
                 <script src="{{ url_for('static', filename='request.js') }}"></script>
