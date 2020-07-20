@@ -76,9 +76,7 @@ def render3D():
     #exporting_threads[thread_id].start()
     #print("hi3")
     if not terminated[user_id]:
-      command_line = 'python3 -u -m demo.demo --gpu --render_video --detect_human_face ' \
-                     '--input demo/inputs/'+str(user_id)+' --result demo/outputs ' \
-                     '--checkpoint pretrained/pretrained_celeba/checkpoint030.pth'
+      command_line = 'python3 -u -m demo.demo --input demo/inputs/'+str(user_id)+' --result demo/outputs '
       args = shlex.split(command_line)
       proc = Popen(args, stdout=PIPE, stderr=PIPE)
       global subProcesses

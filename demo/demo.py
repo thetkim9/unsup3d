@@ -282,15 +282,15 @@ if __name__ == "__main__":
     parser.add_argument('--result', default='./demo/results/human_face', type=str, help='Path to the directory for saving results')
     parser.add_argument('--checkpoint', default='./pretrained/pretrained_celeba/checkpoint030.pth', type=str, help='Path to the checkpoint file')
     parser.add_argument('--output_size', default=128, type=int, help='Output image size')
-    parser.add_argument('--gpu', default=False, action='store_true', help='Enable GPU')
-    parser.add_argument('--detect_human_face', default=False, action='store_true', help='Enable automatic human face detection. This does not detect cat faces.')
-    parser.add_argument('--render_video', default=False, action='store_true', help='Render 3D animations to video')
+    parser.add_argument('--gpu', default=True, action='store_true', help='Enable GPU')
+    parser.add_argument('--detect_human_face', default=True, action='store_true', help='Enable automatic human face detection. This does not detect cat faces.')
+    parser.add_argument('--render_video', default=True, action='store_true', help='Render 3D animations to video')
     args = parser.parse_args()
 
     #print("demo1")
+    model = Demo(args)
     input_dir = args.input
     result_dir = args.result
-    model = Demo(args)
     im_list = [os.path.join(input_dir, f) for f in sorted(os.listdir(input_dir)) if is_image_file(f)]
 
     #print("demo2")

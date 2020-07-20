@@ -1,11 +1,12 @@
 document.body.onload = function() {
-    //document.getElementById("preload").style.visibility = "hidden";
+    document.getElementById("load").style.visibility = "hidden";
     if (timer!=null)
         clearInterval(timer);
     $.get('stopsubp/' + user_id);
 }
 var timer;
 function check_progress(task_id, progress_bar) {
+    document.getElementById("load").style.visibility = "visible";
     var progress_bar = document.getElementById("progress_bar");
     var dots = document.getElementById("dots");
     var time_spent = document.getElementById("time");
