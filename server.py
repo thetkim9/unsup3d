@@ -153,6 +153,10 @@ def stopsubp(user_id):
 def request_entity_too_large(error):
   return {'error': 'File Too Large'}, 413
 
+@app.route('/healthz')
+def health():
+  return 200
+
 if __name__ == '__main__':
   app.run(debug=False, port=80, host='0.0.0.0')
 
