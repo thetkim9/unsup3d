@@ -1,5 +1,5 @@
 document.body.onload = function() {
-    document.getElementById("preload").style.visibility = "hidden";
+    //document.getElementById("preload").style.visibility = "hidden";
     if (timer!=null)
         clearInterval(timer);
     $.get('stopsubp/' + user_id);
