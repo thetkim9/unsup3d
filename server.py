@@ -92,25 +92,6 @@ def render3D():
           progressRates[user_id] += 0.6
           pass
 
-    #print(user_id, count)
-    #msg, err = p.communicate()
-    #print(msg)
-    #print(err)
-
-    #print("hi4")
-    '''
-    if msg!=None and len(msg)>0:
-        return {'error': 'face not properly recognized. choose a photo with an upfront person.'}, 402
-    '''
-    '''
-    print(os.path.exists("demo/outputs/inImg/texture_animation.mp4"))
-    for path, subdirs, files in os.walk("demo"):
-      for name in files:
-        print(os.path.join(path, name))
-    for path, subdirs, files in os.walk("demo/outputs"):
-      for name in files:
-        print(os.path.join(path, name))
-    '''
     clip = (VideoFileClip("demo/outputs/"+str(user_id)+"/texture_animation.mp4"))
     clip.write_gif("demo/outputs/"+str(user_id)+"/outImg.gif")
 
