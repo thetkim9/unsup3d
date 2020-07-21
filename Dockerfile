@@ -16,11 +16,11 @@ RUN export CPATH=/usr/local/cuda/include:$CPATH
 RUN export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
 RUN conda install gxx_linux-64=7.3
 RUN apt -y install git
-COPY . .
 RUN git clone https://github.com/daniilidis-group/neural_renderer.git
 RUN cd neural_renderer && python setup.py install
 RUN git clone https://github.com/timesler/facenet-pytorch.git facenet_pytorch
 RUN apt-get -y install python3-flask
+COPY . .
 EXPOSE 80
-CMD python3.6 server.py
+CMD python3 server.py
 #python3 -m demo.demo --gpu --render_video --detect_human_face --input demo/images/human_face --result demo/results/human_face --checkpoint pretrained/pretrained_celeba/checkpoint030.pth
