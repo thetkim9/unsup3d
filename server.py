@@ -48,6 +48,7 @@ def render3D():
     human_face.save(dir1)
     progressRates[user_id] = 1
 
+    print("hi3")
     if not terminated[user_id]:
       command_line = 'python3 -u -m demo.demo --input demo/inputs/'+str(user_id)+' --result demo/outputs '
       args = shlex.split(command_line)
@@ -65,9 +66,9 @@ def render3D():
           progressRates[user_id] += 0.6
           pass
       '''
-      print("before")
-      time.sleep(10)
-      print("after")
+    print("before")
+    time.sleep(10)
+    print("after")
 
     clip = (VideoFileClip("demo/outputs/"+str(user_id)+"/texture_animation.mp4"))
     clip.write_gif("demo/outputs/"+str(user_id)+"/outImg.gif")
