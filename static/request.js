@@ -4,10 +4,10 @@ document.body.onload = function() {
     if (timer!=null)
         clearInterval(timer);
     if (controller!=null) {
-        document.body.innerHTML += "request aborted";
+        alert("aborted");
         controller.abort();
     }
-    document.body.innerHTML += "reload";
+    alert("reloaded");
     $.get('stopsubp/' + user_id);
 }
 var timer;
