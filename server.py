@@ -27,7 +27,7 @@ def render3D():
   if request.method != "POST":
     return
 
-  #print("hi0")
+  print("hi0")
   if not request.files.get('person_image'):
     return {'error': 'must have a image of human face'}, 400
 
@@ -36,12 +36,12 @@ def render3D():
     user_id = int(request.form.get('user_id'))
     global terminated
     terminated[user_id] = False
-    #print("hi1")
+    print("hi1")
     human_face = Image.open(request.files['person_image'].stream)
     if(human_face.format not in ['JPG', 'JPEG', 'PNG']):
       return {'error': 'image must be jpg, jpeg or png'}, 401
 
-    #print("hi2")
+    print("hi2")
     path = os.path.join("demo/inputs", str(user_id))
     os.mkdir(path)
     dir1 = "demo/inputs/"+str(user_id)+"/"+str(user_id)+"."+human_face.format.lower()
@@ -72,7 +72,7 @@ def render3D():
     clip = (VideoFileClip("demo/outputs/"+str(user_id)+"/texture_animation.mp4"))
     clip.write_gif("demo/outputs/"+str(user_id)+"/outImg.gif")
 
-    #print("hi5")
+    print("hi5")
     result = send_file("demo/outputs/"+str(user_id)+"/outImg.gif", mimetype='image/gif')
     return result
 
