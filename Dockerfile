@@ -12,7 +12,9 @@ RUN conda install -c anaconda requests
 RUN apt-get -y install curl gnupg locales unzip
 RUN conda install -c menpo opencv
 RUN conda install scikit-image matplotlib pyyaml
-RUN pip3 install tensorboardX moviepy
+#RUN pip3 install tensorboardX moviepy
+RUN conda install -c conda-forge tensorboardx
+RUN conda install -c conda-forge moviepy
 RUN conda install torchvision
 RUN export PATH=/usr/local/cuda/bin:$PATH
 RUN export CPATH=/usr/local/cuda/include:$CPATH
