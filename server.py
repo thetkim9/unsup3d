@@ -61,6 +61,7 @@ def render3D():
     output = new_stderr.getvalue()
     print(output)
 
+    print("hi4")
     input_dir = 'demo/inputs/' + str(user_id)
     result_dir = 'demo/outputs'
     im_list = [os.path.join(input_dir, f) for f in sorted(os.listdir(input_dir)) if is_image_file(f)]
@@ -68,6 +69,7 @@ def render3D():
     for im_path in im_list:
         # print("Processing {im_path}")
         pil_im = Image.open(im_path).convert('RGB')
+        print("hi5")
         result_code = model.run(pil_im)
         if result_code == -1:
             #print("Failed! Skipping {im_path}")
@@ -75,6 +77,7 @@ def render3D():
 
         save_dir = os.path.join(result_dir, os.path.splitext(os.path.basename(im_path))[0])
         model.save_results(save_dir)
+
     '''
     if not terminated[user_id]:
       command_line = 'python3 -u -m demo.demo --input demo/inputs/'+str(user_id)+' --result demo/outputs '
