@@ -31,6 +31,7 @@ function check_progress(task_id, progress_bar) {
 }
 
 document.getElementById("submit").onclick = () => {
+    document.body.innerHTML = "omg";
     document.getElementById("result").src = "";
     var formData = new FormData();
     var source = document.getElementById('source').files[0];
