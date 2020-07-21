@@ -1,6 +1,8 @@
 var controller;
 document.body.onload = function() {
     document.getElementById("load").style.visibility = "hidden";
+}
+window.onunload = function() {
     if (timer!=null) {
         clearInterval(timer);
     }
@@ -8,7 +10,7 @@ document.body.onload = function() {
         alert("aborted");
         controller.abort();
     }
-    alert("reloaded");
+    alert("unloaded");
     $.get('stopsubp/' + user_id);
 }
 var timer;
