@@ -1,9 +1,10 @@
-const controller = new AbortController();
+const controller;
 document.body.onload = function() {
     document.getElementById("load").style.visibility = "hidden";
     if (timer!=null)
         clearInterval(timer);
-    controller.abort();
+    if (controller!=null)
+        controller.abort();
     //$.get('stopsubp/' + user_id);
 }
 var timer;
@@ -43,6 +44,7 @@ document.getElementById("submit").onclick = () => {
     formData.append('user_id', user_id);
     $.get('setup/' + user_id);
     check_progress(user_id, progress_bar);
+    controller = new AbortController()
     const { signal } = controller;
     fetch(
         '/render3D',
