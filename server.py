@@ -1,17 +1,20 @@
 from flask import Flask, render_template, request, send_file
-from flask_limiter import Limiter
+#from flask_limiter import Limiter
 from PIL import Image, ImageOps
-from subprocess import Popen, PIPE
-import shlex
+#from subprocess import Popen, PIPE
+#import shlex
 from moviepy.editor import *
 #import threading
 import time
 import shutil
 import os
+import sys
+import io
 
 progressRates = {}
-subProcesses = {}
-terminated = {}
+#subProcesses = {}
+#terminated = {}
+model = None
 
 app = Flask(__name__, static_url_path="", template_folder="./")
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 8
@@ -49,6 +52,31 @@ def render3D():
     progressRates[user_id] = 1
 
     print("hi3")
+    new_stderr = io.StringIO()
+    sys.stderr = new_stderr
+    sys.stderr.write("test1")
+    sys.stderr.write("test2")
+    output = new_stderr.getvalue()
+    print(output)
+    sys.stderr.write("test3")
+    output = new_stderr.getvalue()
+    print(output)
+
+    input_dir = 'demo/inputs/' + str(user_id)
+    result_dir = 'demo/outputs'
+    im_list = [os.path.join(input_dir, f) for f in sorted(os.listdir(input_dir)) if is_image_file(f)]
+
+    for im_path in im_list:
+        # print("Processing {im_path}")
+        pil_im = Image.open(im_path).convert('RGB')
+        result_code = model.run(pil_im)
+        if result_code == -1:
+            #print("Failed! Skipping {im_path}")
+            continue
+
+        save_dir = os.path.join(result_dir, os.path.splitext(os.path.basename(im_path))[0])
+        model.save_results(save_dir)
+    '''
     if not terminated[user_id]:
       command_line = 'python3 -u -m demo.demo --input demo/inputs/'+str(user_id)+' --result demo/outputs '
       args = shlex.split(command_line)
@@ -58,14 +86,13 @@ def render3D():
 
       # 127 single characters stdout from subprocess
       #count = 0
-      '''
       while proc.poll() is None:  # Check the the child process is still running
         data = proc.stderr.read(1)  # Note: it reads as binary, not text
         if data != str.encode(" ") and data != str.encode("") and data is not None:
           #print(user_id, progressRates[user_id], data, count)
           progressRates[user_id] += 0.6
           pass
-      '''
+    '''
     print("before")
     time.sleep(10)
     print("after")
@@ -100,6 +127,7 @@ def remove(user_id):
     progressRates[user_id] = 100
     return "0"
 
+'''
 @app.route('/stopsubp/<int:user_id>')
 def stopsubp(user_id):
     global subProcesses
@@ -107,6 +135,7 @@ def stopsubp(user_id):
     if user_id in subProcesses.keys():
       subProcesses[user_id].terminate()
     return "0"
+'''
 
 @app.errorhandler(413)
 def request_entity_too_large(error):
@@ -117,5 +146,23 @@ def health():
   return 200
 
 if __name__ == '__main__':
-  app.run(debug=False, port=80, host='0.0.0.0')
+    import argparse
+    import demo.demo
+    global model
+    parser = argparse.ArgumentParser(description='Demo configurations.')
+    parser.add_argument('--input', default='demo/inputs', type=str,
+                        help='Path to the directory containing input images')
+    parser.add_argument('--result', default='demo/outputs', type=str,
+                        help='Path to the directory for saving results')
+    parser.add_argument('--checkpoint', default='./pretrained/pretrained_celeba/checkpoint030.pth', type=str,
+                        help='Path to the checkpoint file')
+    parser.add_argument('--output_size', default=128, type=int, help='Output image size')
+    parser.add_argument('--gpu', default=True, action='store_true', help='Enable GPU')
+    parser.add_argument('--detect_human_face', default=True, action='store_true',
+                        help='Enable automatic human face detection. This does not detect cat faces.')
+    parser.add_argument('--render_video', default=True, action='store_true', help='Render 3D animations to video')
+    args = parser.parse_args()
+    model = demo.Demo(args)
+
+    app.run(debug=False, port=80, host='0.0.0.0', threaded=True)
 
