@@ -1,7 +1,7 @@
 FROM pytorch/pytorch:1.5.1-cuda10.1-cudnn7-devel AS builder
 ENV LANG C.UTF-8
 RUN apt-get update
-RUN conda install pytorch==1.2.0 torchvision==0.5.0 cudatoolkit=9.2 -c pytorch
+RUN conda install pytorch==1.2.0 torchvision==0.4.0 cudatoolkit=9.2 -c pytorch
 RUN apt -y install python3-pip
 #RUN pip3 install Flask-Limiter
 #RUN pip3 install Pillow
