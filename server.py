@@ -5,7 +5,7 @@ from subprocess import Popen, PIPE
 import shlex
 from moviepy.editor import *
 #import threading
-#import time
+import time
 import shutil
 import os
 
@@ -54,14 +54,19 @@ def render3D():
       proc = Popen(args, stdout=PIPE, stderr=PIPE)
       global subProcesses
       subProcesses[user_id] = proc
+
       # 127 single characters stdout from subprocess
-      count = 0
+      #count = 0
+      '''
       while proc.poll() is None:  # Check the the child process is still running
         data = proc.stderr.read(1)  # Note: it reads as binary, not text
         if data != str.encode(" ") and data != str.encode("") and data is not None:
           #print(user_id, progressRates[user_id], data, count)
           progressRates[user_id] += 0.6
           pass
+      '''
+      time.sleep(10)
+      print("yo")
 
     clip = (VideoFileClip("demo/outputs/"+str(user_id)+"/texture_animation.mp4"))
     clip.write_gif("demo/outputs/"+str(user_id)+"/outImg.gif")
@@ -72,12 +77,6 @@ def render3D():
 
   except Exception:
     return {'error': 'cannot load your image files. check your image files'}, 403
-
-
-@app.teardown_request
-def show_teardown(exception):
-    print(request.path, 'after with block', str(exception))
-
 
 @app.route('/setup/<int:user_id>')
 def setup(user_id):
