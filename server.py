@@ -36,7 +36,7 @@ def render3D():
     user_id = int(request.form.get('user_id'))
     global terminated
     terminated[user_id] = False
-    print("hi1")
+    print(user_id, "hi1")
     human_face = Image.open(request.files['person_image'].stream)
     if(human_face.format not in ['JPG', 'JPEG', 'PNG']):
       return {'error': 'image must be jpg, jpeg or png'}, 401

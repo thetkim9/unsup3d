@@ -47,9 +47,8 @@ document.getElementById("submit").onclick = () => {
     fetch(
         '/render3D',
         {
-            method: 'POST',
-            body: formData,
-        }, {signal}
+            signal
+        }
     )
     .then(response => {
         if ( response.status == 200){
