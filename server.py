@@ -15,6 +15,7 @@ from demo.utils import *
 progressRates = {}
 #subProcesses = {}
 #terminated = {}
+
 global model
 model = None
 
@@ -49,18 +50,17 @@ def render3D():
     os.mkdir(path)
     dir1 = "demo/inputs/"+str(user_id)+"/"+str(user_id)+"."+human_face.format.lower()
     human_face.save(dir1)
-    progressRates[user_id] = 1
+    progressRates[user_id] = 10
 
     print("hi3")
-    new_stderr = io.StringIO()
-    sys.stderr = new_stderr
-    sys.stderr.write("test1")
-    sys.stderr.write("test2")
-    output = new_stderr.getvalue()
-    print(output)
-    sys.stderr.write("test3")
-    output = new_stderr.getvalue()
-    print(output)
+    #new_stderr = io.StringIO()
+    #sys.stderr.write("test1")
+    #sys.stderr.write("test2")
+    #output = new_stderr.getvalue()
+    #print(output)
+    #sys.stderr.write("test3")
+    #output = new_stderr.getvalue()
+    #print(output)
 
     print("hi4")
     input_dir = 'demo/inputs/' + str(user_id)
@@ -73,12 +73,13 @@ def render3D():
         pil_im = Image.open(im_path).convert('RGB')
         print("hi4.5")
         result_code = model.run(pil_im)
+        progressRates[user_id] = 60
         if result_code == -1:
             #print("Failed! Skipping {im_path}")
             continue
-
         save_dir = os.path.join(result_dir, os.path.splitext(os.path.basename(im_path))[0])
         model.save_results(save_dir)
+    progressRates[user_id] = 70
 
     '''
     if not terminated[user_id]:
@@ -97,13 +98,10 @@ def render3D():
           progressRates[user_id] += 0.6
           pass
     '''
-    print("before")
-    time.sleep(10)
-    print("after")
 
     clip = (VideoFileClip("demo/outputs/"+str(user_id)+"/texture_animation.mp4"))
     clip.write_gif("demo/outputs/"+str(user_id)+"/outImg.gif")
-
+    progressRates[user_id] = 90
     print("hi5")
     result = send_file("demo/outputs/"+str(user_id)+"/outImg.gif", mimetype='image/gif')
     return result
@@ -120,6 +118,7 @@ def setup(user_id):
 @app.route('/progress/<int:user_id>')
 def progress(user_id):
     global progressRates
+    #output = new_stderr.getvalue()
     return str(progressRates[user_id])
 
 @app.route('/remove/<int:user_id>')
