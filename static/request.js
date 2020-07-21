@@ -47,7 +47,7 @@ document.getElementById("submit").onclick = () => {
     formData.append('user_id', user_id);
     $.get('setup/' + user_id);
     check_progress(user_id, progress_bar);
-    controller = new AbortController()
+    controller = new AbortController();
     var abort = controller.signal;
     fetch(
         '/render3D',
