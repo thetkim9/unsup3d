@@ -51,7 +51,7 @@ document.getElementById("submit").onclick = () => {
         {
             method: 'POST',
             body: formData,
-            signal: abort
+            //signal: abort
         }
     )
     .then(response => {
