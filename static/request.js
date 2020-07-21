@@ -2,7 +2,7 @@ var controller;
 document.body.onload = function() {
     document.getElementById("load").style.visibility = "hidden";
 }
-window.onunload = function() {
+window.onbeforeunload = function() {
     if (timer!=null) {
         clearInterval(timer);
     }
