@@ -48,6 +48,7 @@ document.getElementById("submit").onclick = () => {
     $.get('setup/' + user_id);
     check_progress(user_id, progress_bar);
     controller = new AbortController();
+    alert("controller created");
     var abort = controller.signal;
     fetch(
         '/render3D',
