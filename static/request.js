@@ -1,4 +1,3 @@
-document.body.innerHTML += "start";
 var controller;
 document.body.onload = function() {
     document.getElementById("load").style.visibility = "hidden";
@@ -32,7 +31,6 @@ function check_progress(task_id, progress_bar) {
 }
 
 document.getElementById("submit").onclick = () => {
-    document.body.innerHTML += "omg";
     document.getElementById("result").src = "";
     var formData = new FormData();
     var source = document.getElementById('source').files[0];
@@ -47,13 +45,13 @@ document.getElementById("submit").onclick = () => {
     $.get('setup/' + user_id);
     check_progress(user_id, progress_bar);
     controller = new AbortController()
-    const { abort } = controller;
+    var abort = controller.signal;
     fetch(
         '/render3D',
         {
             method: 'POST',
             body: formData,
-            //signal: abort
+            signal: abort
         }
     )
     .then(response => {
