@@ -148,7 +148,7 @@ def health():
 
 if __name__ == '__main__':
     import argparse
-    import demo.demo
+    import demo.demo as demo
     parser = argparse.ArgumentParser(description='Demo configurations.')
     parser.add_argument('--input', default='demo/inputs', type=str,
                         help='Path to the directory containing input images')
