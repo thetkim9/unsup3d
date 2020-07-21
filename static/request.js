@@ -10,8 +10,8 @@ window.onbeforeunload = function() {
         alert("aborted");
         controller.abort();
     }
-    alert("unloaded");
     $.get('stopsubp/' + user_id);
+    return "Do you really want to leave this page?";
 }
 var timer;
 function check_progress(task_id, progress_bar) {
