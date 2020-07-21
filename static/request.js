@@ -1,4 +1,3 @@
-var controller;
 document.body.onload = function() {
     document.getElementById("load").style.visibility = "hidden";
     if (timer!=null)
