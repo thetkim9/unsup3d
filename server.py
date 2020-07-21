@@ -10,7 +10,7 @@ import shutil
 import os
 import sys
 import io
-from .utils import *
+from demo.utils import *
 
 progressRates = {}
 #subProcesses = {}
