@@ -3,9 +3,11 @@ document.body.onload = function() {
     document.getElementById("load").style.visibility = "hidden";
     if (timer!=null)
         clearInterval(timer);
-    if (controller!=null)
+    if (controller!=null) {
+        document.body.innerHTML += "request aborted"
         controller.abort();
-    //$.get('stopsubp/' + user_id);
+    }
+    $.get('stopsubp/' + user_id);
 }
 var timer;
 function check_progress(task_id, progress_bar) {
