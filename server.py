@@ -14,6 +14,7 @@ import io
 progressRates = {}
 #subProcesses = {}
 #terminated = {}
+global model
 model = None
 
 app = Flask(__name__, static_url_path="", template_folder="./")
@@ -65,7 +66,7 @@ def render3D():
     input_dir = 'demo/inputs/' + str(user_id)
     result_dir = 'demo/outputs'
     im_list = [os.path.join(input_dir, f) for f in sorted(os.listdir(input_dir)) if is_image_file(f)]
-
+    global model
     for im_path in im_list:
         # print("Processing {im_path}")
         pil_im = Image.open(im_path).convert('RGB')
@@ -148,7 +149,6 @@ def health():
 if __name__ == '__main__':
     import argparse
     import demo.demo
-    global model
     parser = argparse.ArgumentParser(description='Demo configurations.')
     parser.add_argument('--input', default='demo/inputs', type=str,
                         help='Path to the directory containing input images')
