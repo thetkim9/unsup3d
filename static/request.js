@@ -45,11 +45,13 @@ document.getElementById("submit").onclick = () => {
     $.get('setup/' + user_id);
     check_progress(user_id, progress_bar);
     controller = new AbortController()
-    const { signal } = controller;
+    const { abort } = controller;
     fetch(
         '/render3D',
         {
-            signal
+            method: 'POST',
+            body: formData,
+            signal: abort
         }
     )
     .then(response => {
