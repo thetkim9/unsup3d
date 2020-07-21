@@ -65,8 +65,9 @@ def render3D():
           progressRates[user_id] += 0.6
           pass
       '''
+      print("before")
       time.sleep(10)
-      print("yo")
+      print("after")
 
     clip = (VideoFileClip("demo/outputs/"+str(user_id)+"/texture_animation.mp4"))
     clip.write_gif("demo/outputs/"+str(user_id)+"/outImg.gif")
