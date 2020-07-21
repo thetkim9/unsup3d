@@ -65,11 +65,12 @@ def render3D():
     input_dir = 'demo/inputs/' + str(user_id)
     result_dir = 'demo/outputs'
     im_list = [os.path.join(input_dir, f) for f in sorted(os.listdir(input_dir)) if is_image_file(f)]
+    print("hi4.2")
     global model
     for im_path in im_list:
         # print("Processing {im_path}")
         pil_im = Image.open(im_path).convert('RGB')
-        print("hi5")
+        print("hi4.5")
         result_code = model.run(pil_im)
         if result_code == -1:
             #print("Failed! Skipping {im_path}")
