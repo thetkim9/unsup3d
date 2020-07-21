@@ -1,7 +1,9 @@
+var controller;
 document.body.onload = function() {
     document.getElementById("load").style.visibility = "hidden";
-    if (timer!=null)
+    if (timer!=null) {
         clearInterval(timer);
+    }
     if (controller!=null) {
         alert("aborted");
         controller.abort();
