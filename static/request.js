@@ -1,5 +1,4 @@
 const controller = new AbortController();
-const { signal } = controller;
 document.body.onload = function() {
     document.getElementById("load").style.visibility = "hidden";
     if (timer!=null)
@@ -44,6 +43,7 @@ document.getElementById("submit").onclick = () => {
     formData.append('user_id', user_id);
     $.get('setup/' + user_id);
     check_progress(user_id, progress_bar);
+    const { signal } = controller;
     fetch(
         '/render3D',
         {
