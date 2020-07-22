@@ -70,12 +70,15 @@ document.getElementById("submit").onclick = () => {
         }
     })
     .then(response => {
+        /*
         alert(response.headers['Content-Type']);
         if (parseInt(response.headers['Content-Type']) == user_id) {
             return response.blob();
         }
         else
             throw Error("response to different user");
+        */
+        return response.blob();
     })
     .then(blob => URL.createObjectURL(blob))
     .then(imageURL => {
