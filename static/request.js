@@ -63,17 +63,19 @@ document.getElementById("submit").onclick = () => {
     )
     .then(response => {
         if ( response.status == 200){
-            return response
+            return response;
         }
         else{
-            throw Error("rendering error:")
+            throw Error("rendering error:");
         }
     })
     .then(response => {
-        if (parseInt(response.headers['user_id']) == user_id)
-            return response.blob()
+        if (parseInt(response.headers['user_id']) == user_id) {
+            alert(response.headers['user_id']);
+            return response.blob();
+        }
         else
-            return None
+            throw Error("response to different user");
     })
     .then(blob => URL.createObjectURL(blob))
     .then(imageURL => {
@@ -84,6 +86,7 @@ document.getElementById("submit").onclick = () => {
         submit.style.visibility = "visible";
     })
     .catch(e =>{
-        document.getElementById("errorbox").innerHTML = e;
+        if (e!="response to different user")
+            document.getElementById("errorbox").innerHTML = e;
     })
 }
