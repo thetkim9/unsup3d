@@ -86,7 +86,7 @@ document.getElementById("submit").onclick = () => {
         submit.style.visibility = "visible";
     })
     .catch(e =>{
-        if (e!="response to different user")
+        if (e!=Error("response to different user"))
             document.getElementById("errorbox").innerHTML = e;
     })
 }
