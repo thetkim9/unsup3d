@@ -73,8 +73,11 @@ def render3D(user_id):
     progressRates[user_id] = 90
     print("hi5")
     result = send_file("demo/outputs/"+str(user_id)+"/outImg.gif", mimetype='image/gif')
+    print("hi6")
     response = make_response(result)
+    print("hi7")
     response.headers['Content-Type'] = str(user_id)
+    print("hi8")
     return response
 
   except Exception:
