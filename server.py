@@ -28,7 +28,7 @@ app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 8
 def index():
     return render_template('index.html')
 
-@app.route('/render3D/<int:user_id>'', methods=['GET', 'POST'])
+@app.route('/render3D/<int:user_id>', methods=['GET', 'POST'])
 def render3D(user_id):
   if request.method != "POST":
     return
