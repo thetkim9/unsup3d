@@ -7,7 +7,7 @@ window.onbeforeunload = function() {
         clearInterval(timer);
     }
     if (controller!=null) {
-        alert("abort");
+        //alert("abort");
         controller.abort();
     }
     $.get('remove/' + user_id);
@@ -66,15 +66,19 @@ document.getElementById("submit").onclick = () => {
             return response
         }
         else{
-            document.body.innerHTML += response.status
             throw Error("rendering error:")
         }
     })
-    .then(response => response.blob())
+    .then(response => {
+        if (parseInt(response.headers['user_id']) == user_id)
+            return response.blob()
+        else
+            return None
+    })
     .then(blob => URL.createObjectURL(blob))
     .then(imageURL => {
         document.getElementById("result").src = imageURL;
-        document.body.innerHTML += imageURL;
+        //document.body.innerHTML += imageURL;
         document.getElementById("errorbox").innerHTML = "";
         $.get('remove/' + user_id);
         submit.style.visibility = "visible";

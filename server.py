@@ -1,20 +1,11 @@
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, send_file, make_response
 #from flask_limiter import Limiter
 from PIL import Image, ImageOps
-#from subprocess import Popen, PIPE
-#import shlex
 from moviepy.editor import *
-#import threading
-import time
 import shutil
-import os
-import sys
-import io
 from demo.utils import *
 
 progressRates = {}
-#subProcesses = {}
-#terminated = {}
 
 global model
 model = None
@@ -52,17 +43,6 @@ def render3D(user_id):
     human_face.save(dir1)
     progressRates[user_id] = 10
 
-    #print("hi3")
-    #new_stderr = io.StringIO()
-    #sys.stderr.write("test1")
-    #sys.stderr.write("test2")
-    #output = new_stderr.getvalue()
-    #print(output)
-    #sys.stderr.write("test3")
-    #output = new_stderr.getvalue()
-    #print(output)
-
-    #print("hi4")
     input_dir = 'demo/inputs/' + str(user_id)
     result_dir = 'demo/outputs'
     im_list = [os.path.join(input_dir, f) for f in sorted(os.listdir(input_dir)) if is_image_file(f)]
@@ -81,30 +61,14 @@ def render3D(user_id):
         model.save_results(save_dir)
     progressRates[user_id] = 70
 
-    '''
-    if not terminated[user_id]:
-      command_line = 'python3 -u -m demo.demo --input demo/inputs/'+str(user_id)+' --result demo/outputs '
-      args = shlex.split(command_line)
-      proc = Popen(args, stdout=PIPE, stderr=PIPE)
-      global subProcesses
-      subProcesses[user_id] = proc
-
-      # 127 single characters stdout from subprocess
-      #count = 0
-      while proc.poll() is None:  # Check the the child process is still running
-        data = proc.stderr.read(1)  # Note: it reads as binary, not text
-        if data != str.encode(" ") and data != str.encode("") and data is not None:
-          #print(user_id, progressRates[user_id], data, count)
-          progressRates[user_id] += 0.6
-          pass
-    '''
-
     clip = (VideoFileClip("demo/outputs/"+str(user_id)+"/texture_animation.mp4"))
     clip.write_gif("demo/outputs/"+str(user_id)+"/outImg.gif")
     progressRates[user_id] = 90
     #print("hi5")
     result = send_file("demo/outputs/"+str(user_id)+"/outImg.gif", mimetype='image/gif')
-    return result
+    response = make_response(result)
+    response.headers['user_id'] = str(user_id)
+    return response
 
   except Exception:
     return {'error': 'cannot load your image files. check your image files'}, 403
@@ -132,16 +96,6 @@ def remove(user_id):
     except:
         pass
     return "0"
-
-'''
-@app.route('/stopsubp/<int:user_id>')
-def stopsubp(user_id):
-    global subProcesses
-    terminated[user_id] = True
-    if user_id in subProcesses.keys():
-      subProcesses[user_id].terminate()
-    return "0"
-'''
 
 @app.errorhandler(413)
 def request_entity_too_large(error):
