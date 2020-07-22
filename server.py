@@ -123,8 +123,8 @@ def progress(user_id):
 
 @app.route('/remove/<int:user_id>')
 def remove(user_id):
+    progressRates[user_id] = 100
     try:
-        progressRates[user_id] = 100
         path = os.path.join("demo/inputs", str(user_id))
         shutil.rmtree(path)
         path = os.path.join("demo/outputs", str(user_id))

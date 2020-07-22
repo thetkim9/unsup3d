@@ -9,7 +9,7 @@ window.onbeforeunload = function() {
     if (controller!=null) {
         controller.abort();
     }
-    //$.get('remove/' + user_id);
+    $.get('remove/' + user_id);
     return "Do you really want to leave this page?";
 }
 var timer;
