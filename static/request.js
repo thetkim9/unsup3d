@@ -69,10 +69,14 @@ document.getElementById("submit").onclick = () => {
         }
     })
     .then(response => {
+        var id = -1;
         for (var pair of response.headers.entries()) {
-          console.log(pair[0]+ ': '+ pair[1]);
+            if (pair[0]=="content-type") {
+                id = pair[1]
+                break;
+            }
         }
-        if (parseInt(response.headers['Content-Type']) == user_id) {
+        if (parseInt(id) == user_id) {
             return response.blob();
         }
         else
