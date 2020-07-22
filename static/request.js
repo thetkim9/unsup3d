@@ -30,7 +30,7 @@ function check_progress(task_id, progress_bar) {
           if (parseInt(progress)>=100) {
             dots.innerHTML = " complete";
             clearInterval(timer);
-            alert(progress);
+            alert(progress_bar.value);
           }
       })
     }
