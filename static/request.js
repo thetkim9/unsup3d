@@ -7,10 +7,9 @@ window.onbeforeunload = function() {
         clearInterval(timer);
     }
     if (controller!=null) {
-        alert("aborted");
         controller.abort();
     }
-    $.get('stopsubp/' + user_id);
+    $.get('remove/' + user_id);
     return "Do you really want to leave this page?";
 }
 var timer;
@@ -47,14 +46,14 @@ document.getElementById("submit").onclick = () => {
     var user_id = Math.floor(Math.random()*1000000000);
     var progress_bar = document.getElementById('progress_bar');
     formData.append('person_image', source);
-    formData.append('user_id', user_id);
+    //formData.append('user_id', user_id);
     $.get('setup/' + user_id);
     check_progress(user_id, progress_bar);
     controller = new AbortController();
     alert("controller created");
     var abort = controller.signal;
     fetch(
-        '/render3D',
+        '/render3D/'+user_id,
         {
             method: 'POST',
             body: formData,

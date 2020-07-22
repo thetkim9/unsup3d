@@ -28,8 +28,8 @@ app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 8
 def index():
     return render_template('index.html')
 
-@app.route('/render3D', methods=['GET', 'POST'])
-def render3D():
+@app.route('/render3D/<int:user_id>'', methods=['GET', 'POST'])
+def render3D(user_id):
   if request.method != "POST":
     return
 
@@ -39,7 +39,7 @@ def render3D():
 
   try:
     global progressRates
-    user_id = int(request.form.get('user_id'))
+    #user_id = int(request.form.get('user_id'))
     print(user_id, "hi1")
     human_face = Image.open(request.files['person_image'].stream)
     if(human_face.format not in ['JPG', 'JPEG', 'PNG']):
@@ -123,11 +123,14 @@ def progress(user_id):
 
 @app.route('/remove/<int:user_id>')
 def remove(user_id):
-    path = os.path.join("demo/inputs", str(user_id))
-    shutil.rmtree(path)
-    path = os.path.join("demo/outputs", str(user_id))
-    shutil.rmtree(path)
-    progressRates[user_id] = 100
+    try:
+        progressRates[user_id] = 100
+        path = os.path.join("demo/inputs", str(user_id))
+        shutil.rmtree(path)
+        path = os.path.join("demo/outputs", str(user_id))
+        shutil.rmtree(path)
+    except:
+        pass
     return "0"
 
 '''
