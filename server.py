@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, send_file, make_response
 #from flask_limiter import Limiter
 from PIL import Image, ImageOps
 #from subprocess import Popen, PIPE
@@ -58,7 +58,7 @@ def render3D(user_id):
     for im_path in im_list:
         # print("Processing {im_path}")
         pil_im = Image.open(im_path).convert('RGB')
-        #print("hi4.5")
+        print(im_path)
         result_code = model.run(pil_im)
         progressRates[user_id] = 60
         if result_code == -1:
