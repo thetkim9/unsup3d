@@ -7,6 +7,7 @@ window.onbeforeunload = function() {
         clearInterval(timer);
     }
     if (controller!=null) {
+        alert("abort");
         controller.abort();
     }
     $.get('remove/' + user_id);
@@ -29,6 +30,7 @@ function check_progress(task_id, progress_bar) {
           if (parseInt(progress)>=100) {
             dots.innerHTML = " complete";
             clearInterval(timer);
+            alert(progress);
           }
       })
     }
