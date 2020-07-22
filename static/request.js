@@ -30,7 +30,6 @@ function check_progress(task_id, progress_bar) {
           if (parseInt(progress)>=100) {
             dots.innerHTML = " complete";
             clearInterval(timer);
-            alert(progress_bar.value);
           }
       })
     }
@@ -70,8 +69,9 @@ document.getElementById("submit").onclick = () => {
         }
     })
     .then(response => {
-        alert(response.headers.keys());
-        alert(response.headers.values());
+        for (var pair of response.headers.entries()) {
+          console.log(pair[0]+ ': '+ pair[1]);
+        }
         if (parseInt(response.headers['Content-Type']) == user_id) {
             return response.blob();
         }
