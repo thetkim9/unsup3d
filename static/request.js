@@ -70,8 +70,8 @@ document.getElementById("submit").onclick = () => {
         }
     })
     .then(response => {
+        alert(response.headers['user_id']);
         if (parseInt(response.headers['user_id']) == user_id) {
-            alert(response.headers['user_id']);
             return response.blob();
         }
         else
