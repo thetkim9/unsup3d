@@ -10,7 +10,7 @@ window.onbeforeunload = function() {
         //alert("abort");
         controller.abort();
     }
-    //$.get('remove/' + user_id);
+    $.get('remove/' + user_id);
     return "Do you really want to leave this page?";
 }
 var timer;
@@ -88,13 +88,13 @@ document.getElementById("submit").onclick = () => {
         document.getElementById("result").src = imageURL;
         //document.body.innerHTML += imageURL;
         document.getElementById("errorbox").innerHTML = "";
-        //$.get('remove/' + user_id);
+        $.get('remove/' + user_id);
         submit.style.visibility = "visible";
     })
     .catch(e =>{
         if (e!=Error("response to different user")) {
             document.getElementById("errorbox").innerHTML = e;
-            //$.get('remove/' + user_id);
+            $.get('remove/' + user_id);
         }
     })
 }
