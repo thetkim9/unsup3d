@@ -29,6 +29,7 @@ function check_progress(task_id, progress_bar) {
           if (parseInt(progress)>=100) {
             dots.innerHTML = " complete";
             clearInterval(timer);
+            $.get('remove/' + user_id);
           }
       })
     }
@@ -50,7 +51,6 @@ document.getElementById("submit").onclick = () => {
     $.get('setup/' + user_id);
     check_progress(user_id, progress_bar);
     controller = new AbortController();
-    alert("controller created");
     var abort = controller.signal;
     fetch(
         '/render3D/'+user_id,
@@ -73,6 +73,7 @@ document.getElementById("submit").onclick = () => {
     .then(blob => URL.createObjectURL(blob))
     .then(imageURL => {
         document.getElementById("result").src = imageURL;
+        document.body.innerHTML += imageURL;
         document.getElementById("errorbox").innerHTML = "";
         $.get('remove/' + user_id);
         submit.style.visibility = "visible";
