@@ -40,19 +40,19 @@ def render3D(user_id):
   try:
     global progressRates
     #user_id = int(request.form.get('user_id'))
-    print(user_id, "hi1")
+    #print(user_id, "hi1")
     human_face = Image.open(request.files['person_image'].stream)
     if(human_face.format not in ['JPG', 'JPEG', 'PNG']):
       return {'error': 'image must be jpg, jpeg or png'}, 401
 
-    print("hi2")
+    #print("hi2")
     path = os.path.join("demo/inputs", str(user_id))
     os.mkdir(path)
     dir1 = "demo/inputs/"+str(user_id)+"/"+str(user_id)+"."+human_face.format.lower()
     human_face.save(dir1)
     progressRates[user_id] = 10
 
-    print("hi3")
+    #print("hi3")
     #new_stderr = io.StringIO()
     #sys.stderr.write("test1")
     #sys.stderr.write("test2")
@@ -62,16 +62,16 @@ def render3D(user_id):
     #output = new_stderr.getvalue()
     #print(output)
 
-    print("hi4")
+    #print("hi4")
     input_dir = 'demo/inputs/' + str(user_id)
     result_dir = 'demo/outputs'
     im_list = [os.path.join(input_dir, f) for f in sorted(os.listdir(input_dir)) if is_image_file(f)]
-    print("hi4.2")
+    #print("hi4.2")
     global model
     for im_path in im_list:
         # print("Processing {im_path}")
         pil_im = Image.open(im_path).convert('RGB')
-        print("hi4.5")
+        #print("hi4.5")
         result_code = model.run(pil_im)
         progressRates[user_id] = 60
         if result_code == -1:
@@ -102,7 +102,7 @@ def render3D(user_id):
     clip = (VideoFileClip("demo/outputs/"+str(user_id)+"/texture_animation.mp4"))
     clip.write_gif("demo/outputs/"+str(user_id)+"/outImg.gif")
     progressRates[user_id] = 90
-    print("hi5")
+    #print("hi5")
     result = send_file("demo/outputs/"+str(user_id)+"/outImg.gif", mimetype='image/gif')
     return result
 
