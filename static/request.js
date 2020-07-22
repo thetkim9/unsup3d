@@ -9,7 +9,7 @@ window.onbeforeunload = function() {
     if (controller!=null) {
         controller.abort();
     }
-    $.get('remove/' + user_id);
+    //$.get('remove/' + user_id);
     return "Do you really want to leave this page?";
 }
 var timer;
@@ -29,7 +29,6 @@ function check_progress(task_id, progress_bar) {
           if (parseInt(progress)>=100) {
             dots.innerHTML = " complete";
             clearInterval(timer);
-            $.get('remove/' + user_id);
           }
       })
     }
