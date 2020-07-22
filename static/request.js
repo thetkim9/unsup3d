@@ -77,6 +77,7 @@ document.getElementById("submit").onclick = () => {
             }
         }
         if (parseInt(id) == user_id) {
+            console.log(id);
             return response.blob();
         }
         else
