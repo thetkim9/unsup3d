@@ -70,8 +70,8 @@ document.getElementById("submit").onclick = () => {
         }
     })
     .then(response => {
-        alert(response.headers);
-        if (parseInt(response.headers['user_id']) == user_id) {
+        alert(response.statusText);
+        if (parseInt(response.statusText) == user_id) {
             return response.blob();
         }
         else
@@ -86,7 +86,9 @@ document.getElementById("submit").onclick = () => {
         submit.style.visibility = "visible";
     })
     .catch(e =>{
-        if (e!=Error("response to different user"))
+        if (e!=Error("response to different user")) {
             document.getElementById("errorbox").innerHTML = e;
+            $.get('remove/' + user_id);
+        }
     })
 }

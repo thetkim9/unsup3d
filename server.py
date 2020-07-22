@@ -67,7 +67,7 @@ def render3D(user_id):
     #print("hi5")
     result = send_file("demo/outputs/"+str(user_id)+"/outImg.gif", mimetype='image/gif')
     response = make_response(result)
-    response.headers['user_id'] = str(user_id)
+    response.statusText = str(user_id)
     return response
 
   except Exception:
