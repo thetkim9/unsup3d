@@ -57,7 +57,7 @@ class thread_with_trace(threading.Thread):
 def run_model(user_id):
     input_dir = 'demo/inputs/' + str(user_id)
     result_dir = 'demo/outputs'
-    im_list = [os.path.join(input_dir, f) for f in sorted(os.listdir(input_dir)) if is_image_file(f)]
+    im_list = [os.path.join(input_dir, f) for f in sorted(os.listdir(input_dir))]
     print("hi4.2", user_id)
     global model
     for im_path in im_list:
@@ -152,6 +152,11 @@ def progress(user_id):
     global progressRates
     return str(progressRates[user_id])
 
+@app.route('/complete/<int:user_id>')
+def complete(user_id):
+    progressRates[user_id] = 100
+    return "0"
+
 @app.route('/remove/<int:user_id>')
 def remove(user_id):
     try:
@@ -164,7 +169,7 @@ def remove(user_id):
         shutil.rmtree(path)
     except:
         pass
-    progressRates[user_id] = 100
+    progressRates.pop(user_id, None)
     return "0"
 
 @app.route('/pending/<int:user_id>')
