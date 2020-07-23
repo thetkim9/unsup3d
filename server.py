@@ -125,7 +125,7 @@ def render3D(user_id):
     '''
     global t1
     global threads
-    t1 = thread_with_trace(target=run_model, args=(user_id))
+    t1 = thread_with_trace(target=run_model, args=[user_id])
     threads.append(t1)
     while threads[0]!=t1:
         threads[0].join()
