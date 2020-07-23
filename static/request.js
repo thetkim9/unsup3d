@@ -10,8 +10,6 @@ window.onbeforeunload = function() {
         //alert("abort");
         controller.abort();
     }
-    $.get('complete/' + user_id);
-    await new Promise(r => setTimeout(r, 1000));
     $.get('remove/' + user_id);
     return "Do you really want to leave this page?";
 }
@@ -101,16 +99,12 @@ document.getElementById("submit").onclick = () => {
         document.getElementById("result").src = imageURL;
         //document.body.innerHTML += imageURL;
         document.getElementById("errorbox").innerHTML = "";
-        $.get('complete/' + user_id);
-        await new Promise(r => setTimeout(r, 1000));
         $.get('remove/' + user_id);
         submit.style.visibility = "visible";
     })
     .catch(e =>{
         if (e!=Error("response to different user")) {
             document.getElementById("errorbox").innerHTML = e;
-            $.get('complete/' + user_id);
-            await new Promise(r => setTimeout(r, 1000));
             $.get('remove/' + user_id);
         }
     })
