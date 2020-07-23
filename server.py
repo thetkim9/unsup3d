@@ -71,7 +71,7 @@ def run_model(user_id):
             continue
         save_dir = os.path.join(result_dir, os.path.splitext(os.path.basename(im_path))[0])
         model.save_results(save_dir)
-        time.sleep(1)
+        time.sleep(2)
 
 app = Flask(__name__, static_url_path="", template_folder="./")
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 8
