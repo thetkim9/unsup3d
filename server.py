@@ -107,24 +107,6 @@ def render3D(user_id):
     progressRates[user_id] = 10
     print("hi4", user_id)
 
-    '''
-    input_dir = 'demo/inputs/' + str(user_id)
-    result_dir = 'demo/outputs'
-    im_list = [os.path.join(input_dir, f) for f in sorted(os.listdir(input_dir)) if is_image_file(f)]
-    print("hi4.2")
-    global model
-    for im_path in im_list:
-        # print("Processing {im_path}")
-        pil_im = Image.open(im_path).convert('RGB')
-        print(im_path)
-        result_code = model.run(pil_im)
-        progressRates[user_id] = 60
-        if result_code == -1:
-            #print("Failed! Skipping {im_path}")
-            continue
-        save_dir = os.path.join(result_dir, os.path.splitext(os.path.basename(im_path))[0])
-        model.save_results(save_dir)
-    '''
     global t1
     global threads
     t1 = thread_with_trace(target=run_model, args=[user_id])
@@ -167,7 +149,6 @@ def setup(user_id):
 @app.route('/progress/<int:user_id>')
 def progress(user_id):
     global progressRates
-    #output = new_stderr.getvalue()
     return str(progressRates[user_id])
 
 @app.route('/remove/<int:user_id>')
@@ -184,6 +165,17 @@ def remove(user_id):
         pass
     progressRates[user_id] = 100
     return "0"
+
+@app.route('/pending/<int:user_id>')
+def pending(user_id):
+    global threads
+    for i in range(len(threads)):
+        if threads[i].user_id == user_id:
+            return str(i)
+    if progressRates[user_id] == 100:
+        return 0
+    else:
+        return len(threads)
 
 @app.errorhandler(413)
 def request_entity_too_large(error):

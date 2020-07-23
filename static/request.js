@@ -14,9 +14,11 @@ window.onbeforeunload = function() {
     return "Do you really want to leave this page?";
 }
 var timer;
+var timer2;
 function check_progress(task_id, progress_bar) {
     document.getElementById("load").style.visibility = "visible";
     var progress_bar = document.getElementById("progress_bar");
+    var pending = document.getElementById("pending");
     var dots = document.getElementById("dots");
     var time_spent = document.getElementById("time");
     var temp = [".", "..", "..."];
@@ -34,6 +36,15 @@ function check_progress(task_id, progress_bar) {
       })
     }
     timer = setInterval(worker, 1000);
+    function worker2() {
+      $.get('pending/' + task_id, function(order) {
+          pending.innerHTML = order;
+          if (parseInt(progress)>=100) {
+            clearInterval(timer2);
+          }
+      })
+    }
+    timer2 = setInterval(worker2, 3000);
 }
 
 document.getElementById("submit").onclick = () => {
