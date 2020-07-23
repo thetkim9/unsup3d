@@ -55,6 +55,7 @@ class thread_with_trace(threading.Thread):
         self.killed = True
 
 def run_model(user_id):
+    print("hi4.1", user_id)
     input_dir = 'demo/inputs/' + str(user_id)
     result_dir = 'demo/outputs'
     im_list = [os.path.join(input_dir, f) for f in sorted(os.listdir(input_dir))]
@@ -114,6 +115,7 @@ def render3D(user_id):
     t1.user_id = user_id
     threads.append(t1)
     while threads[0].user_id!=user_id:
+        print(str(user_id)+": ", threads[0].user_id)
         threads[0].join()
     threads[0].start()
     threads[0].join()
