@@ -10,7 +10,11 @@ window.onbeforeunload = function() {
         //alert("abort");
         controller.abort();
     }
-    $.get('remove/' + user_id);
+    if (user_id!=null) {
+        //alert("abort");
+        $.get('remove/' + user_id);
+        console.log("abort");
+    }
     return "Do you really want to leave this page?";
 }
 var timer;
@@ -55,7 +59,7 @@ document.getElementById("submit").onclick = () => {
     submit.style.visibility = "hidden";
     //const { v4: uuidv4 } = require('uuid');
     //var user_id = uuidv4();
-    var user_id = Math.floor(Math.random()*1000000000);
+    user_id = Math.floor(Math.random()*1000000000);
     var progress_bar = document.getElementById('progress_bar');
     formData.append('person_image', source);
     //formData.append('user_id', user_id);
