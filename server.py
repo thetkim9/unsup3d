@@ -115,8 +115,9 @@ def render3D(user_id):
     threads.append(t1)
     while threads[0].user_id!=user_id:
         print(str(user_id)+": ", threads[0].user_id)
-        time.sleep(1)
+        time.sleep(0.5)
         threads[0].join()
+        time.sleep(0.5)
     threads[0].start()
     threads[0].join()
     print(threads.pop(0))
