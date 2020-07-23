@@ -39,7 +39,7 @@ function check_progress(task_id, progress_bar) {
     function worker2() {
       $.get('pending/' + task_id, function(order) {
           pending.innerHTML = order;
-          if (parseInt(progress)>=100) {
+          if (parseInt(progress_bar.value)=100) {
             clearInterval(timer2);
           }
       })
