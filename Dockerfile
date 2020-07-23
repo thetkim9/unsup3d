@@ -28,4 +28,4 @@ RUN apt-get -y install python3-flask
 COPY . .
 EXPOSE 80
 CMD python3 server.py
-#python3 -m demo.demo --gpu --render_video --detect_human_face --input demo/images/human_face --result demo/results/human_face --checkpoint pretrained/pretrained_celeba/checkpoint030.pth
+##python3 -m demo.demo --gpu --render_video --detect_human_face --input demo/images/human_face --result demo/results/human_face --checkpoint pretrained/pretrained_celeba/checkpoint030.pth
