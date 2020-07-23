@@ -18,8 +18,6 @@ import threading
 progressRates = {}
 threads = []
 
-t1 = None
-
 global model
 model = None
 
@@ -108,7 +106,6 @@ def render3D(user_id):
     progressRates[user_id] = 10
     print("hi4", user_id)
 
-    global t1
     global threads
     t1 = thread_with_trace(target=run_model, args=[user_id])
     t1.user_id = user_id
@@ -159,9 +156,10 @@ def progress(user_id):
 @app.route('/remove/<int:user_id>')
 def remove(user_id):
     try:
-        global t1
-        if t1 is not None:
-            t1.kill()
+        for i in range(len(threads)):
+            if threads[i].user_id == user_id:
+                threads[i].kill()
+                break
         path = os.path.join("demo/inputs", str(user_id))
         shutil.rmtree(path)
         path = os.path.join("demo/outputs", str(user_id))
