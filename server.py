@@ -119,6 +119,8 @@ def render3D(user_id):
         threads[0].join()
     threads[0].start()
     threads[0].join()
+    print(threads.pop(0))
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     t1 = None
     '''
     if not threads[0].isAlive():
