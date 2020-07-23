@@ -173,9 +173,9 @@ def pending(user_id):
         if threads[i].user_id == user_id:
             return str(i)
     if progressRates[user_id] == 100:
-        return 0
+        return "0"
     else:
-        return len(threads)
+        return str(len(threads))
 
 @app.errorhandler(413)
 def request_entity_too_large(error):
