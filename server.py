@@ -5,17 +5,72 @@ from PIL import Image, ImageOps
 #import shlex
 from moviepy.editor import *
 #import threading
-import time
+#import time
 import shutil
 import os
 import sys
-import io
+#import io
 from demo.utils import *
 
+#import trace
+import threading
+
 progressRates = {}
+threads = []
+
+t1 = None
 
 global model
 model = None
+
+
+class thread_with_trace(threading.Thread):
+    def __init__(self, *args, **keywords):
+        threading.Thread.__init__(self, *args, **keywords)
+        self.killed = False
+
+    def start(self):
+        self.__run_backup = self.run
+        self.run = self.__run
+        threading.Thread.start(self)
+
+    def __run(self):
+        sys.settrace(self.globaltrace)
+        self.__run_backup()
+        self.run = self.__run_backup
+
+    def globaltrace(self, frame, event, arg):
+        if event == 'call':
+            return self.localtrace
+        else:
+            return None
+
+    def localtrace(self, frame, event, arg):
+        if self.killed:
+            if event == 'line':
+                raise SystemExit()
+        return self.localtrace
+
+    def kill(self):
+        self.killed = True
+
+def run_model(user_id):
+    input_dir = 'demo/inputs/' + str(user_id)
+    result_dir = 'demo/outputs'
+    im_list = [os.path.join(input_dir, f) for f in sorted(os.listdir(input_dir)) if is_image_file(f)]
+    print("hi4.2")
+    global model
+    for im_path in im_list:
+        # print("Processing {im_path}")
+        pil_im = Image.open(im_path).convert('RGB')
+        print(im_path)
+        result_code = model.run(pil_im)
+        progressRates[user_id] = 60
+        if result_code == -1:
+            # print("Failed! Skipping {im_path}")
+            continue
+        save_dir = os.path.join(result_dir, os.path.splitext(os.path.basename(im_path))[0])
+        model.save_results(save_dir)
 
 app = Flask(__name__, static_url_path="", template_folder="./")
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 8
@@ -50,6 +105,7 @@ def render3D(user_id):
     human_face.save(dir1)
     progressRates[user_id] = 10
 
+    '''
     input_dir = 'demo/inputs/' + str(user_id)
     result_dir = 'demo/outputs'
     im_list = [os.path.join(input_dir, f) for f in sorted(os.listdir(input_dir)) if is_image_file(f)]
@@ -66,6 +122,22 @@ def render3D(user_id):
             continue
         save_dir = os.path.join(result_dir, os.path.splitext(os.path.basename(im_path))[0])
         model.save_results(save_dir)
+    '''
+    global t1
+    global threads
+    t1 = thread_with_trace(target=run_model, args=(user_id))
+    threads.append(t1)
+    while threads[0]!=t1:
+        threads[0].join()
+    threads[0].start()
+    threads[0].join()
+    threads.pop(0)
+    t1 = None
+    '''
+    if not threads[0].isAlive():
+        print('thread killed')
+    '''
+
     progressRates[user_id] = 70
 
     clip = (VideoFileClip("demo/outputs/"+str(user_id)+"/texture_animation.mp4"))
@@ -97,14 +169,17 @@ def progress(user_id):
 
 @app.route('/remove/<int:user_id>')
 def remove(user_id):
-    progressRates[user_id] = 100
     try:
+        global t1
+        if t1 is not None:
+            t1.kill()
         path = os.path.join("demo/inputs", str(user_id))
         shutil.rmtree(path)
         path = os.path.join("demo/outputs", str(user_id))
         shutil.rmtree(path)
     except:
         pass
+    progressRates[user_id] = 100
     return "0"
 
 @app.errorhandler(413)
