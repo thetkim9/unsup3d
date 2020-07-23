@@ -150,7 +150,7 @@ def setup(user_id):
 @app.route('/progress/<int:user_id>')
 def progress(user_id):
     global progressRates
-    return str(progressRates.get(user_id, default=100))
+    return str(progressRates.get(user_id, 100))
 
 @app.route('/remove/<int:user_id>')
 def remove(user_id):
