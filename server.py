@@ -173,7 +173,7 @@ def pending(user_id):
     for i in range(len(threads)):
         if threads[i].user_id == user_id:
             return str(i)
-    if progressRates[user_id] == 100:
+    if progressRates.get(user_id, 100) == 100:
         return "0"
     else:
         return str(len(threads))
