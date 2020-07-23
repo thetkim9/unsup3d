@@ -101,9 +101,11 @@ def render3D(user_id):
     print("hi2", user_id)
     path = os.path.join("demo/inputs", str(user_id))
     os.mkdir(path)
+    print("hi3", user_id)
     dir1 = "demo/inputs/"+str(user_id)+"/"+str(user_id)+"."+human_face.format.lower()
     human_face.save(dir1)
     progressRates[user_id] = 10
+    print("hi4", user_id)
 
     '''
     input_dir = 'demo/inputs/' + str(user_id)
