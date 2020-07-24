@@ -85,14 +85,17 @@ def render3D(user_id):
   if request.method != "POST":
     return
 
-  print("hi0")
+  if len(threads)>5:
+      return {'error': 'too many requests'}, 429
+
+  print("hi0", user_id)
   if not request.files.get('person_image'):
     return {'error': 'must have a image of human face'}, 400
 
   try:
     global progressRates
     #user_id = int(request.form.get('user_id'))
-    print(user_id, "hi1")
+    print("hi1", user_id)
     human_face = Image.open(request.files['person_image'].stream)
     if(human_face.format not in ['JPG', 'JPEG', 'PNG']):
       return {'error': 'image must be jpg, jpeg or png'}, 401
@@ -112,18 +115,12 @@ def render3D(user_id):
     threads.append(t1)
     while threads[0].user_id!=user_id:
         print(str(user_id)+": ", threads[0].user_id)
-        time.sleep(0.5)
-        threads[0].join()
-        time.sleep(0.5)
+        if threads[0].is_alive():
+            threads[0].join()
     threads[0].start()
     threads[0].join()
     print(threads.pop(0))
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-    t1 = None
-    '''
-    if not threads[0].isAlive():
-        print('thread killed')
-    '''
 
     progressRates[user_id] = 70
 
@@ -140,7 +137,7 @@ def render3D(user_id):
     return response
 
   except Exception:
-    return {'error': 'cannot load your image files. check your image files'}, 403
+    return {'error': 'error while loading input and/or output image files'}, 403
 
 @app.route('/setup/<int:user_id>')
 def setup(user_id):
@@ -157,7 +154,7 @@ def progress(user_id):
 def remove(user_id):
     try:
         for i in range(len(threads)):
-            if threads[i].user_id == user_id:
+            if threads[i].user_id == user_id and threads[i].is_alive():
                 threads[i].kill()
                 break
         path = os.path.join("demo/inputs", str(user_id))
