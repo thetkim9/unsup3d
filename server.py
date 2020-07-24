@@ -84,7 +84,8 @@ def index():
 def render3D(user_id):
   if request.method != "POST":
     return
-
+  
+  global threads
   if len(threads)>5:
       return {'error': 'too many requests'}, 429
 
