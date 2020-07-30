@@ -118,7 +118,9 @@ def render3D(user_id):
         if threads[0].is_alive():
             threads[0].join()
     threads[0].start()
-    threads[0].join()
+    threads[0].join(timeout=20)
+    if threads[0].is_alive():
+        threads[0].kill()
     print(threads.pop(0))
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
@@ -183,7 +185,7 @@ def request_entity_too_large(error):
 
 @app.route('/healthz')
 def health():
-  return 200
+  return "healthy", 200
 
 if __name__ == '__main__':
     import argparse
