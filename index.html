@@ -38,7 +38,8 @@
                 <h3>Upload </h3>
                 <p>We recommend uploading images that mostly consist of human faces
                     since images that require tough face recognition take longer to operate</p>
-                <p>Operation generally takes around 20~30 seconds</p>
+                <p>Single request generally takes less than 20 seconds to process</p>
+                <p>In case of request overload, your request can take up to 60 seconds to process</p>
                 <div id = 'inputImage'>
                     <label for="source">insert 2D person image : </label>
                     <input type = 'file' id = 'source' onchange="readURL(this);" style="margin-right: 10px; margin-bottom: 10px;">
