@@ -26,7 +26,10 @@ RUN cd neural_renderer && python setup.py install
 RUN git clone https://github.com/timesler/facenet-pytorch.git facenet_pytorch
 RUN apt-get -y install python3-flask
 RUN curl -o pretrained_celeba.zip "https://www.robots.ox.ac.uk/~vgg/research/unsup3d/data/pretrained_celeba.zip" && unzip pretrained_celeba.zip
-RUN mv pretrained_celeba pretrained
+RUN mkdir pretrained
+COPY pretrained pretrained
+RUN mkdir pretrained/pretrained_celeba
+RUN mv pretrained_celeba/checkpoint030.pth pretrained/pretrained_celeba
 COPY . .
 EXPOSE 80
 CMD python3 server.py
