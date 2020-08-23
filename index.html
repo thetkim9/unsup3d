@@ -24,31 +24,48 @@
               }
             }
         </script>
+        <style>
+        #link {
+            display: inline-block;
+            vertical-align: top;
+        }
+        #logo {
+            display: inline-block;
+            vertical-align: top;
+        }
+        </style>
     </head>
     <body>
         <div class = "container">
             <div class="jumbotron mt-3">
-
                 <h1>3D Rendering of Human Face</h1>
-                <A>Git Hub Repo : </A> <A href="https://github.com/thetkim9/unsup3d"> unsup3d</A>
-                <br>
-
-                <hr class="solid">
-
-                <h3>Upload </h3>
+                <hr>
+                <div id="link">
+                    <A>Github Repo : </A> <A href="https://github.com/thetkim9/unsup3d"> Github</A>
+                    <br>
+                    <A>Ainize 2.0 : </A> <A href="https://master-unsup3d-thetkim9.endpoint.ainize.ai"> Ainize</A>
+                </div>
+                <div id="logo">
+                    <img src="{{ url_for('static', filename='logo.png') }}" width="62" height="46">
+                </div>
+                <hr>
+                <h3>Note</h3>
                 <p>We recommend uploading images that mostly consist of human faces
                     since images that require tough face recognition take longer to operate</p>
                 <p>Single request generally takes less than 20 seconds to process</p>
                 <p>In case of request overload, your request can take up to 60 seconds to process</p>
+                <hr>
                 <div id = 'inputImage'>
                     <label for="source">insert 2D person image : </label>
                     <input type = 'file' id = 'source' onchange="readURL(this);" style="margin-right: 10px; margin-bottom: 10px;">
                     <input type="submit" id = "submit" class="btn btn-primary btn-lg" style="margin-left: auto;">
                 </div>
+                <hr>
                 <progress id="progress_bar" value="0" max="100"> </progress>
                 <p id="load">loading<span id="dots">.</span></p>
                 <p>time spent: <span id="time">0</span>s</p>
                 <p>Number of pending requests ahead: <span id="pending">0</span></p>
+                <hr>
                 <div id ='resultBox' style="margin-left: auto; margin-right: auto;">
                     <p id='errorbox'></p>
                     <img id="preload" src="{{ url_for('static', filename='sampleIn.png') }}">
